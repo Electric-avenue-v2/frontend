@@ -3,6 +3,7 @@ import { Geist } from "next/font/google";
 import "../globals.css";
 import React from 'react';
 import Header from '~/widgets/header/ui/Header';
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +31,7 @@ export default function RootLayout({
           </main>
           <footer></footer>
         </div>
+        <SpeedInsights />
       </body>
     </html>
   );
