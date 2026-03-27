@@ -1,0 +1,30 @@
+.content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
+    background-image: url("./page-bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.logoWrapper {
+    margin: var(--space-2-5) 0 0 var(--space-2-5);
+}
+
+.heroSection {
+	flex: 1;
+    margin: var(--space-40) auto 0;
+    padding-bottom: var(--space-10);
+}
+
+@media screen and (min-width: 640px) {
+    .heroSection {
+        margin-top: var(--space-40);
+    }
+}
+
+.card {
+    padding: var(--space-1-5) var(--space-6);
+    overflow: visible;
+}

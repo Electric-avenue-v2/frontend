@@ -1,0 +1,53 @@
+@layer components {
+	.input {
+		height: 2.25rem;
+		width: 100%;
+		min-width: 0;
+		border-radius: var(--radius);
+		border: var(--border-1) solid var(--color-input-border);
+		background-color: transparent;
+		padding: var(--space-1) var(--space-3);
+		font-size: var(--text-sm);
+		line-height: var(--leading-tight);
+		box-shadow: var(--shadow-xs);
+		transition:
+			color 0.15s ease-in-out,
+			box-shadow 0.15s ease-in-out,
+			border-color 0.15s ease-in-out;
+		outline: var(--outline-none);
+	}
+
+	.input::placeholder {
+		color: var(--color-fg-muted);
+	}
+
+	.input::file-selector-button {
+		color: var(--color-fg);
+		display: inline-flex;
+		height: 1.75rem;
+		border: var(--border-0);
+		background-color: transparent;
+		font-size: var(--text-sm);
+		font-weight: var(--font-medium);
+	}
+
+	.input:focus-visible {
+		border: var(--border-2) solid oklch(from var(--color-input-border) calc(l - 0.1) c h);
+		box-shadow: var(--shadow-sm);
+	}
+
+	.input:disabled {
+		pointer-events: none;
+		cursor: not-allowed;
+		opacity: 0.5;
+	}
+
+	.input[aria-invalid='true'] {
+		border-color: var(--color-destructive);
+		color: var(--color-destructive);
+	}
+
+	.input[aria-invalid='true']::placeholder {
+		color: var(--color-destructive);
+	}
+}

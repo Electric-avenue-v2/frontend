@@ -1,0 +1,37 @@
+@layer components {
+	.separator {
+		background-color: var(--color-border);
+		flex-shrink: 0;
+	}
+
+	.separator[data-orientation='horizontal'] {
+		height: 1px;
+		width: 100%;
+	}
+
+	.separator[data-orientation='vertical'] {
+		width: 1px;
+		height: 100%;
+	}
+
+	.container {
+		display: flex;
+		align-items: center;
+		max-width: 100%;
+		margin: var(--space-3) var(--space-0);
+	}
+
+	.line {
+		flex-grow: 1;
+		flex-shrink: 1;
+		height: 1px;
+		background-color: var(--color-border);
+	}
+
+	.text {
+		margin: var(--space-0) var(--space-2);
+		color: var(--color-muted-fg);
+		font-size: var(--text-sm);
+		text-transform: uppercase;
+	}
+}

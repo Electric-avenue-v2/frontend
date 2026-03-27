@@ -1,0 +1,32 @@
+@layer tokens {
+	:root {
+		/* ── Border Radius ── */
+		--radius-none: 0;
+		--radius-xs: 0.125rem; /* 2px  */
+		--radius-sm: 0.25rem; /* 4px  */
+		--radius-md: 0.375rem; /* 6px  */
+		--radius-base: 0.5rem; /* 8px  */
+		--radius-lg: 0.625rem; /* 10px */
+		--radius-xl: 0.75rem; /* 12px */
+		--radius-2xl: 1rem; /* 16px */
+		--radius-3xl: 1.5rem; /* 24px */
+		--radius-full: 9999px;
+
+		/* Global basic radius */
+		--radius: var(--radius-base);
+
+		/* ── Border Widths ── */
+		--border-none: none;
+		--border-0: 0;
+		--border-1: 1px;
+		--border-2: 2px;
+		--border-4: 4px;
+		--border-8: 8px;
+
+		/* ── Outline ── */
+		--outline-none: none;
+        --outline-0: 0;
+		--outline-width: 2px;
+		--outline-offset: 2px;
+	}
+}

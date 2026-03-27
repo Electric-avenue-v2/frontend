@@ -1,0 +1,117 @@
+@layer components {
+	.menuContent {
+		min-width: 128px;
+		border-radius: var(--radius-base);
+		padding: var(--space-1);
+		background: var(--color-popover);
+		color: var(--color-popover-fg);
+		box-shadow: var(--shadow-sm);
+		overflow-y: auto;
+		overflow-x: hidden;
+		z-index: var(--z-dropdown);
+	}
+
+	.menuContent[data-state='open'] {
+		animation: var(--animate-fade-in);
+	}
+
+	.menuContent[data-state='closed'] {
+		animation: var(--animate-fade-out);
+	}
+
+	.item {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: var(--space-1-5);
+		padding: var(--space-1) var(--space-1-5);
+		padding-right: var(--space-8);
+		border-radius: var(--radius-md);
+		font-size: var(--text-sm);
+		cursor: default;
+		user-select: none;
+		outline: var(--outline-none);
+	}
+
+	.item[data-inset='true'] {
+		padding-left: var(--space-7);
+	}
+
+	.item:focus {
+		background: var(--color-accent);
+		color: var(--color-accent-fg);
+	}
+
+	.item[data-disabled] {
+		pointer-events: none;
+		opacity: 0.5;
+	}
+
+	.item[data-variant='destructive'] {
+		color: var(--color-destructive);
+	}
+
+	.item[data-variant='destructive']:hover {
+		color: var(--color-destructive-fg);
+	}
+
+	.item[data-variant='destructive']:focus {
+		background: var(--color-destructive-hover);
+	}
+
+	.indicator {
+		position: absolute;
+		right: 8px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.label {
+		padding: var(--space-1) var(--space-1-5);
+		font-size: var(--text-sm);
+		font-weight: var(--font-medium);
+		color: var(--color-muted-fg);
+	}
+
+	.label[data-inset='true'] {
+		padding-left: var(--space-7);
+	}
+
+	.separator {
+		height: 1px;
+		margin: var(--space-1) -4px;
+		background: var(--color-border);
+	}
+
+	.shortcut {
+		margin-left: auto;
+		font-size: var(--text-sm);
+		color: var(--color-muted-fg);
+	}
+
+	.subTrigger {
+		display: flex;
+		align-items: center;
+		gap: var(--space-1-5);
+		padding: var(--space-1) var(--space-1-5);
+		border-radius: var(--radius-md);
+		font-size: var(--text-sm);
+		cursor: default;
+	}
+
+	.subTrigger:focus,
+	.subTrigger[data-state='open'] {
+		background: var(--color-accent);
+		color: var(--color-accent-fg);
+	}
+
+	.subContent {
+		min-width: 120px;
+		border-radius: var(--radius-base);
+		padding: var(--space-1);
+		margin-left: var(--space-1);
+		background: var(--color-popover);
+		box-shadow: var(--shadow-sm);
+	}
+}

@@ -1,0 +1,183 @@
+@layer components {
+	.fieldSet {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-4);
+		border: var(--border-1) solid color-mix(in oklch, var(--color-border), black 5%);
+		border-radius: var(--radius-sm);
+	}
+
+	.fieldSet:has(> [data-slot='checkbox-group']),
+	.fieldSet:has(> [data-slot='radio-group']) {
+		gap: var(--space-3);
+	}
+
+	.fieldLegend {
+		margin-bottom: var(--space-1-5);
+		margin-left: var(--space-2);
+		font-weight: var(--font-medium);
+	}
+
+	.fieldLegend[data-variant='label'] {
+		font-size: var(--text-sm);
+	}
+
+	.fieldLegend[data-variant='legend'] {
+		font-size: var(--text-base);
+	}
+
+	.fieldGroup {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		gap: var(--space-5);
+		padding: 0 var(--space-2) var(--space-5);
+		container-type: inline-size;
+		container-name: field-group;
+	}
+
+	.fieldGroup[data-slot='checkbox-group'],
+	.fieldGroup[data-slot='radio-group'] {
+		gap: var(--space-3);
+	}
+
+	.fieldGroup > [data-slot='field-group'] {
+		gap: var(--space-4);
+	}
+
+	.field {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		gap: var(--space-1);
+	}
+
+	.field[data-invalid='true'] {
+		color: var(--color-destructive);
+	}
+
+	.field > * {
+		width: 100%;
+	}
+
+	.field > :global(.sr-only) {
+		width: auto;
+	}
+
+	.fieldContent {
+		display: flex;
+		flex-direction: column;
+		flex: 1 1 0;
+		gap: var(--space-0-5);
+		line-height: var(--leading-snug);
+	}
+
+	.fieldLabel {
+		display: flex;
+		width: fit-content;
+		gap: var(--space-2);
+		line-height: var(--leading-snug);
+	}
+
+	.fieldLabel:has([data-state='checked']) {
+		background: oklch(var(--color-primary) / 0.05);
+		border-color: oklch(var(--color-primary) / 0.3);
+	}
+
+	[data-disabled='true'] .fieldLabel,
+	[data-disabled='true'] .fieldTitle {
+		opacity: 0.5;
+	}
+
+	.fieldLabel:has(> [data-slot='field']) {
+		width: 100%;
+		flex-direction: column;
+		border-radius: var(--radius-lg);
+		border: var(--border-1) solid var(--color-border);
+	}
+
+	.fieldLabel > [data-slot='field'] {
+		padding: var(--space-2-5);
+	}
+
+	.fieldTitle {
+		display: flex;
+		width: fit-content;
+		align-items: center;
+		gap: var(--space-2);
+		font-size: var(--text-sm);
+		font-weight: var(--font-medium);
+		line-height: var(--leading-snug);
+	}
+
+	.fieldDescription {
+		font-size: var(--text-sm);
+		color: var(--color-fg-muted);
+		text-align: left;
+		line-height: var(--leading-normal);
+		font-weight: var(--font-regular);
+		text-wrap: balance;
+	}
+
+	[data-variant='legend'] + .fieldDescription {
+		margin-top: -0.375rem;
+	}
+
+	.fieldDescription:last-child {
+		margin-top: 0;
+	}
+
+	.fieldDescription:nth-last-child(2) {
+		margin-top: -0.25rem;
+	}
+
+	.fieldDescription a {
+		text-decoration: underline;
+		text-underline-offset: 4px;
+	}
+
+	.fieldDescription a:hover {
+		color: var(--color-accent);
+	}
+
+	.fieldSeparator {
+		position: relative;
+		height: 1.25rem;
+		margin: 0.5rem 0;
+		font-size: var(--text-sm);
+	}
+
+	[data-variant='outline'] > .fieldSeparator {
+		margin-bottom: -0.5rem;
+	}
+
+	.separatorLine {
+		position: absolute;
+		inset: 0;
+		top: 50%;
+	}
+
+	.separatorContent {
+		display: block;
+		position: relative;
+		width: fit-content;
+		margin-inline: auto;
+		padding-inline: var(--space-2);
+		color: var(--color-fg-muted);
+		background: var(--color-bg);
+	}
+
+	.fieldError {
+		font-size: var(--text-sm);
+		font-weight: var(--font-regular);
+		color: var(--color-destructive);
+	}
+
+	.errorList {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-1);
+		margin-left: var(--space-4);
+		list-style: disc;
+	}
+}

@@ -1,0 +1,42 @@
+@layer components {
+	.logoLink {
+		display: flex;
+		align-items: center;
+		gap: var(--space-2);
+		text-decoration: none;
+		width: fit-content;
+		user-select: none;
+	}
+
+	.iconWrapper {
+		width: 2.2rem;
+		height: 2.2rem;
+		border-radius: var(--radius-xl);
+		background-color: var(--color-accent);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: transform 300ms ease;
+	}
+
+	.logoLink:hover .iconWrapper {
+		transform: scale(1.02);
+	}
+
+	.icon {
+		width: 1.25rem;
+		height: 1.25rem;
+		color: var(--color-fg-inverted);
+	}
+
+	.textBase {
+		font-size: var(--text-lg);
+		line-height: var(--leading-relaxed);
+		font-weight: var(--font-bold);
+		color: var(--color-primary-active);
+	}
+
+	.textHighlight {
+		color: var(--color-accent);
+	}
+}

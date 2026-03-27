@@ -1,0 +1,7 @@
+@layer components {
+    .skeleton {
+        border-radius: 6px;
+        background: var(--color-muted);
+        animation: var(--animate-pulse);
+    }
+}

@@ -1,0 +1,14 @@
+.wrapper {
+	background-color: var(--color-secondary);
+	position: absolute;
+	top: -8rem;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 10rem;
+	height: 10rem;
+	margin: var(--space-0) auto var(--space-4) auto;
+	border: var(--border-1) solid var(--color-border);
+	box-shadow: var(--shadow-md);
+	border-radius: var(--radius-full);
+	overflow: hidden;
+}

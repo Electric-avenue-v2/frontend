@@ -1,0 +1,220 @@
+type AttributeInfo {
+  id: ID!
+  name: String!
+  slug: String!
+}
+
+type AttributeValue {
+  attribute: AttributeInfo!
+  id: ID!
+  value: String!
+}
+
+type Category {
+  icon: String
+  id: ID!
+  isGroup: Boolean
+  name: String!
+  parentId: String
+}
+
+input CreateProductInput {
+  categoryId: String!
+  description: String!
+  images: [ProductImageInput!]
+  specs: [ProductAttributeInput!]!
+  title: String!
+  variants: [CreateVariantInput!]!
+}
+
+input CreateVariantInput {
+  attributes: [ProductAttributeInput!]!
+  images: [ProductImageInput!]!
+  price: Float!
+  sku: String!
+  stock: Int!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input GetProductsInput {
+  attributes: [ProductAttributeFilter!]
+  categoryId: String
+  limit: Int! = 20
+  maxPrice: Float
+  minPrice: Float
+  offset: Int! = 0
+  search: String
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type MessageResponse {
+  message: String!
+}
+
+type Mutation {
+  createProduct(createProductInput: CreateProductInput!): ProductDetails!
+  deleteProduct(id: String!): ProductDetails!
+  login(input: LoginInput!): Tokens!
+  logout: MessageResponse!
+  refresh: Tokens!
+  register(input: RegisterInput!): UserIdResponse!
+  resendOtp(input: ResendOtpInput!): MessageResponse!
+  verifyOtp(input: VerifyOtpInput!): MessageResponse!
+}
+
+input ProductAttributeFilter {
+  slug: String!
+  values: [String!]!
+}
+
+input ProductAttributeInput {
+  attributeValueId: String!
+}
+
+type ProductAttributeValue {
+  value: AttributeValue!
+}
+
+interface ProductBase {
+  category: ProductCategory!
+  createdAt: DateTime!
+  id: ID!
+
+  """Min price of variants"""
+  minPrice: Float
+  slug: String!
+
+  """Main picture"""
+  thumbnail: String
+  title: String!
+  updatedAt: DateTime!
+  variantsCount: Int!
+}
+
+type ProductCategory {
+  icon: String
+  id: ID!
+  name: String!
+  slug: String!
+}
+
+type ProductDetails implements ProductBase {
+  category: ProductCategory!
+  createdAt: DateTime!
+  description: String!
+  id: ID!
+
+  """Min price of variants"""
+  minPrice: Float
+  productImages: [ProductImage!]!
+  seller: ProductSeller!
+  slug: String!
+  specs: [ProductAttributeValue!]!
+
+  """Main picture"""
+  thumbnail: String
+  title: String!
+  updatedAt: DateTime!
+  variants: [ProductVariant!]!
+  variantsCount: Int!
+}
+
+type ProductImage {
+  id: ID!
+  publicId: String!
+  url: String!
+}
+
+input ProductImageInput {
+  publicId: String!
+  url: String!
+}
+
+type ProductListItem implements ProductBase {
+  category: ProductCategory!
+  createdAt: DateTime!
+  id: ID!
+
+  """Min price of variants"""
+  minPrice: Float
+  slug: String!
+
+  """Main picture"""
+  thumbnail: String
+  title: String!
+  updatedAt: DateTime!
+
+  """Quantity of goods"""
+  variantsCount: Int!
+}
+
+type ProductPagination {
+  items: [ProductListItem!]!
+  total: Int!
+}
+
+type ProductSeller {
+  firstName: String!
+  id: ID!
+  lastName: String!
+}
+
+type ProductVariant {
+  attributes: [ProductAttributeValue!]
+  id: ID!
+  price: Float!
+  productImages: [ProductImage!]
+  sku: String!
+  stock: Int!
+}
+
+type Query {
+  categories: [Category!]!
+  hello: String!
+  me: UserModel
+  product(id: String!): ProductDetails!
+  products(query: GetProductsInput!): ProductPagination!
+}
+
+input RegisterInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+}
+
+input ResendOtpInput {
+  email: String!
+}
+
+type Tokens {
+  accessToken: String!
+  refreshToken: String!
+}
+
+type UserIdResponse {
+  userId: String!
+}
+
+type UserModel {
+  confirmed: Boolean!
+  createdAt: DateTime!
+  email: String!
+  firstName: String!
+  id: ID!
+  lastName: String!
+  updatedAt: DateTime!
+}
+
+input VerifyOtpInput {
+  email: String!
+  otpCode: String!
+}

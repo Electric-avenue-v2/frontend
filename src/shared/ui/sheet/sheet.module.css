@@ -1,0 +1,241 @@
+@layer components {
+	.overlay {
+		position: fixed;
+		inset: 0;
+		z-index: var(--z-dropdown);
+		background-color: var(--color-overlay);
+	}
+
+	.overlay[data-state='open'] {
+		animation: var(--animate-fade-in);
+	}
+
+	.overlay[data-state='closed'] {
+		animation: var(--animate-fade-out);
+	}
+
+	.content {
+		position: fixed;
+		z-index: var(--z-dropdown);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-4);
+		background-color: var(--color-bg);
+		box-shadow: var(--shadow-xl);
+		transition-property: all;
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+		padding: var(--space-4);
+	}
+
+	.content[data-state='open'] {
+		animation-duration: var(--duration-slower);
+		animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+		animation-fill-mode: forwards;
+	}
+
+	.content[data-state='closed'] {
+		animation-duration: var(--duration-slow);
+		animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+		animation-fill-mode: forwards;
+	}
+
+	.sideRight {
+		top: 0;
+		bottom: 0;
+		right: 0;
+		height: 100%;
+		width: 75%;
+		border-left: var(--border-1) solid var(--color-border);
+	}
+
+	.sideRight[data-state='open'] {
+		animation-name: slideInRight;
+	}
+	.sideRight[data-state='closed'] {
+		animation-name: slideOutRight;
+	}
+
+	.sideLeft {
+		top: 0;
+		bottom: 0;
+		left: 0;
+		height: 100%;
+		width: 75%;
+		border-right: var(--border-1) solid var(--color-border);
+	}
+
+	.sideLeft[data-state='open'] {
+		animation-name: slideInLeft;
+	}
+	.sideLeft[data-state='closed'] {
+		animation-name: slideOutLeft;
+	}
+
+	.sideTop {
+		top: 0;
+		left: 0;
+		right: 0;
+		height: auto;
+		border-bottom: var(--border-1) solid var(--color-border);
+	}
+
+	.sideTop[data-state='open'] {
+		animation-name: slideInTop;
+	}
+	.sideTop[data-state='closed'] {
+		animation-name: slideOutTop;
+	}
+
+	.sideBottom {
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: auto;
+		border-top: var(--border-1) solid var(--color-border);
+	}
+
+	.sideBottom[data-state='open'] {
+		animation-name: slideInBottom;
+	}
+	.sideBottom[data-state='closed'] {
+		animation-name: slideOutBottom;
+	}
+
+	@media (min-width: 640px) {
+		.sideRight,
+		.sideLeft {
+			max-width: 24rem;
+		}
+	}
+
+	.closeButton {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		border-radius: var(--radius-md);
+		background: transparent;
+		border: var(--border-none);
+		opacity: .7;
+		transition: opacity .2s;
+		cursor: pointer;
+	}
+
+	.closeButton:hover {
+		opacity: 1;
+	}
+
+	.closeButton:focus {
+		outline: var(--outline-none);
+		box-shadow: var(--color-ring-offset);
+	}
+
+	.closeButton:disabled {
+		pointer-events: none;
+	}
+
+	.closeButton[data-state='open'] {
+		background-color: var(--color-secondary);
+	}
+
+	.closeIcon {
+		width: 1rem;
+		height: 1rem;
+		color: var(--color-fg);
+	}
+
+	.header {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-1-5);
+	}
+
+	.footer {
+		margin-top: auto;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+	}
+
+	.title {
+		color: var(--color-fg);
+		font-weight: var(--font-semibold);
+		font-size: var(--text-base);
+	}
+
+	.description {
+		color: var(--color-fg-muted);
+		font-size: var(--text-sm);
+	}
+
+	@keyframes slideInRight {
+		from {
+			transform: translateX(100%);
+		}
+		to {
+			transform: translateX(0);
+		}
+	}
+
+	@keyframes slideOutRight {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(100%);
+		}
+	}
+
+	@keyframes slideInLeft {
+		from {
+			transform: translateX(-100%);
+		}
+		to {
+			transform: translateX(0);
+		}
+	}
+
+	@keyframes slideOutLeft {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-100%);
+		}
+	}
+
+	@keyframes slideInTop {
+		from {
+			transform: translateY(-100%);
+		}
+		to {
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes slideOutTop {
+		from {
+			transform: translateY(0);
+		}
+		to {
+			transform: translateY(-100%);
+		}
+	}
+
+	@keyframes slideInBottom {
+		from {
+			transform: translateY(100%);
+		}
+		to {
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes slideOutBottom {
+		from {
+			transform: translateY(0);
+		}
+		to {
+			transform: translateY(100%);
+		}
+	}
+}

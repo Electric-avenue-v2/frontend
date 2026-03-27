@@ -1,0 +1,23 @@
+@layer components {
+	.label {
+		display: flex;
+		align-items: center;
+		gap: var(--space-2);
+		font-size: var(--text-sm);
+		line-height: var(--leading-none);
+		font-weight: var(--font-medium);
+		user-select: none;
+	}
+
+	:global(.group[data-disabled='true']) .label {
+		pointer-events: none;
+		opacity: .5;
+	}
+
+	:global(.peer):disabled ~ .label,
+	:global(.peer)[data-disabled='true'] ~ .label,
+	:global(.peer)[aria-disabled='true'] ~ .label {
+		cursor: not-allowed;
+		opacity: 0.5;
+	}
+}

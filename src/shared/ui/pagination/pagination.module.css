@@ -1,0 +1,59 @@
+@layer components {
+	.pagination {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+		margin: 0 auto;
+	}
+
+	.content {
+		display: flex;
+		align-items: center;
+		gap: var(--space-0-5);
+	}
+
+	.item {
+		list-style: none;
+	}
+
+	.link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.link[data-active='true'] {
+		font-weight: var(--font-medium);
+	}
+
+	.prev {
+		padding-left: var(--space-1-5);
+	}
+
+	.next {
+		padding-right: var(--space-1-5);
+	}
+
+	.text {
+		display: none;
+	}
+
+	@media (min-width: 640px) {
+		.text {
+			display: inline;
+		}
+	}
+
+	.ellipsis {
+		width: 32px;
+		height: 32px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.ellipsis svg {
+		width: 16px;
+		height: 16px;
+	}
+}

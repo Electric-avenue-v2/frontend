@@ -1,0 +1,17 @@
+@layer components {
+	.toaster {
+		--normal-bg: var(--color-popover);
+		--normal-text: var(--color-popover-fg);
+		--normal-border: var(--border-1) solid var(--color-border);
+		--border-radius: var(--radius-sm);
+	}
+
+	.icon {
+		width: 1rem;
+		height: 1rem;
+	}
+
+	.spin {
+		animation: var(--animate-spin);
+	}
+}

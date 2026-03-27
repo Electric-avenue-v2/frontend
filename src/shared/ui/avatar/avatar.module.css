@@ -1,0 +1,103 @@
+@layer components {
+    .avatar {
+        position: relative;
+        display: flex;
+        overflow: hidden;
+        border-radius: var(--radius-full);
+        flex-shrink: 0;
+        user-select: none;
+    }
+
+    .avatar[data-size="sm"] {
+        width: 24px;
+        height: 24px;
+    }
+
+    .avatar[data-size="default"] {
+        width: 32px;
+        height: 32px;
+    }
+
+    .avatar[data-size="lg"] {
+        width: 40px;
+        height: 40px;
+    }
+
+    .avatarImage {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: inherit;
+    }
+
+    .avatarFallback {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        border-radius: var(--radius-full);
+        background-color: var(--color-muted);
+        color: var(--color-muted-fg);
+        font-size: var(--text-sm);
+    }
+
+    .avatarFallback[data-size="sm"] {
+        font-size: var(--text-xs);
+    }
+
+    .avatarBadge {
+        position: absolute;
+        right: -2px;
+        bottom: -2px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-full);
+        background-color: var(--color-primary);
+        color: var(--color-primary-fg);
+        border: var(--border-2) solid var(--color-bg);
+    }
+
+    .avatarBadge[data-size="sm"] {
+        width: 8px;
+        height: 8px;
+    }
+
+    .avatarBadge[data-size="default"] {
+        width: 10px;
+        height: 10px;
+    }
+
+    .avatarBadge[data-size="lg"] {
+        width: 12px;
+        height: 12px;
+    }
+
+    .avatarGroup {
+        display: flex;
+        margin-left: -8px;
+    }
+
+    .avatarGroup > .avatar {
+        border: var(--border-2) solid var(--color-bg);
+    }
+
+    .avatarGroupCount {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-full);
+        background-color: var(--color-muted);
+        color: var(--color-muted-fg);
+        border: var(--border-2) solid var(--color-bg);
+        width: 32px;
+        height: 32px;
+        font-size: var(--text-sm);
+    }
+
+    .avatarWrapper {
+        position: relative;
+        display: inline-block;
+    }
+}

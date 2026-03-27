@@ -1,0 +1,10 @@
+@layer components {
+	.loader {
+		color: var(--color-fg);
+		animation: var(--animate-spin);
+	}
+
+	.pageLoad {
+		flex: 1 1 0;
+	}
+}
