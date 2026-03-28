@@ -1,9 +1,12 @@
 import { graphql } from '~/shared/api/gql';
 
-export const GetUsersDocument = graphql(`
+export const GetMeDocument = graphql(`
 	query Me {
 		me {
+			id
 			email
+			firstName
+			lastName
 		}
 	}
 `);

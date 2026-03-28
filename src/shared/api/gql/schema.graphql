@@ -13,7 +13,6 @@ type AttributeValue {
 type Category {
   icon: String
   id: ID!
-  isGroup: Boolean
   name: String!
   parentId: String
 }

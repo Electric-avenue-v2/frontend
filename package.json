@@ -52,6 +52,7 @@
 		"@chromatic-com/storybook": "^5.0.1",
 		"@graphql-codegen/cli": "^6.2.1",
 		"@graphql-codegen/client-preset": "^5.2.4",
+		"@parcel/watcher": "^2.5.6",
 		"@storybook/addon-a11y": "^10.2.19",
 		"@storybook/addon-docs": "^10.2.19",
 		"@storybook/addon-vitest": "^10.2.19",

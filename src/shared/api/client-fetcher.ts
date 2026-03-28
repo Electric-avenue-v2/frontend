@@ -1,7 +1,8 @@
 'use client';
 
-import { ClientError, GraphQLClient, type RequestDocument, type Variables } from 'graphql-request';
+import { ClientError, GraphQLClient, type Variables } from 'graphql-request';
 import { configService } from '~/shared/config';
+import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 
 let isRefreshing = false;
 let refreshPromise: Promise<boolean> | null = null;
@@ -37,7 +38,7 @@ function isUnauthenticatedError(error: unknown): boolean {
 }
 
 export const clientFetcher = async <T, V extends Variables = Variables>(
-	document: RequestDocument,
+	document: TypedDocumentNode<T, V>,
 	variables?: V
 ): Promise<T> => {
 	try {

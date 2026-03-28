@@ -1,18 +1,8 @@
 import { serverFetcher } from '~/shared/api/server-fetcher';
-
-const me = `
-	query Me {
-			me {
-					id
-					email
-					firstName
-			}
-	}
-`;
+import { GetMeDocument } from '~/entities/user';
 
 const Page = async () => {
-	const data = await serverFetcher<{ users: { id: string; email: string; firstName: string }[] }>(me);
-	console.log(data);
+	const data = await serverFetcher(GetMeDocument);
 
 	return <div>1</div>;
 };

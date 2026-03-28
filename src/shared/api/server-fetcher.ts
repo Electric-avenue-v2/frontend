@@ -1,10 +1,11 @@
-import { ClientError, GraphQLClient, type RequestDocument, type Variables } from 'graphql-request';
-import { cookies } from 'next/headers';
 import 'server-only';
+import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
+import { ClientError, GraphQLClient, type Variables } from 'graphql-request';
+import { cookies } from 'next/headers';
 import { configService } from '~/shared/config';
 
 export const serverFetcher = async <T, V extends Variables = Variables>(
-	document: RequestDocument,
+	document: TypedDocumentNode<T, V>,
 	variables?: V
 ): Promise<T> => {
 	const cookieStore = await cookies();

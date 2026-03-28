@@ -11,6 +11,7 @@
 	"importOrderSortSpecifiers": true,
 	"importOrderCaseInsensitive": true,
 	"importOrder": [
+		"^server-only$",
 		".*/_.*\\.css$",
 		"<THIRD_PARTY_MODULES>",
 		"~/(.*)$",

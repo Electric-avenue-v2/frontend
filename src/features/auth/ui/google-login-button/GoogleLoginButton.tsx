@@ -2,8 +2,8 @@
 
 import { type CodeResponse, useGoogleLogin } from '@react-oauth/google';
 import { Button } from '~/shared/ui/button/Button';
+import { GoogleIcon } from '~/shared/ui/google-icon';
 import styles from './google-login-btn.module.css';
-import { GoogleIcon } from '~/shared/icons/GoogleIcon';
 
 type GoogleAuthCodeResponse = Omit<CodeResponse, 'error' | 'error_description' | 'error_uri'>;
 
@@ -17,7 +17,7 @@ export const GoogleLoginButton = () => {
 	// 		console.error('Google login failed:', error);
 	// 	}
 	// });
-	const login = () => {}
+	const login = () => {};
 
 	return (
 		<Button className={styles.btn} type="button" variant="outline" onClick={() => login()}>
