@@ -9,7 +9,8 @@ const nextConfig: NextConfig = {
 			}
 		]
 	},
-	typedRoutes: true
+	typedRoutes: true,
+	productionBrowserSourceMaps: true,
 };
 
 export default nextConfig;

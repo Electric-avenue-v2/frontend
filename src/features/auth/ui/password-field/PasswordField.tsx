@@ -47,6 +47,7 @@ export const PasswordField = <T extends FieldValues>({
 							type="button"
 							onClick={toggleShowPassword}
 							className={styles.toggleBtn}
+							aria-label={showPassword ? "Hide password" : "Show password"}
 						>
 							{showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
 						</button>

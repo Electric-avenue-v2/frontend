@@ -8,15 +8,16 @@ import { GoogleIcon } from '~/shared/icons/GoogleIcon';
 type GoogleAuthCodeResponse = Omit<CodeResponse, 'error' | 'error_description' | 'error_uri'>;
 
 export const GoogleLoginButton = () => {
-	const login = useGoogleLogin({
-		flow: 'auth-code',
-		onSuccess: (codeResponse: GoogleAuthCodeResponse) => {
-			console.log('Auth code:', codeResponse.code);
-		},
-		onError: error => {
-			console.error('Google login failed:', error);
-		}
-	});
+	// const login = useGoogleLogin({
+	// 	flow: 'auth-code',
+	// 	onSuccess: (codeResponse: GoogleAuthCodeResponse) => {
+	// 		console.log('Auth code:', codeResponse.code);
+	// 	},
+	// 	onError: error => {
+	// 		console.error('Google login failed:', error);
+	// 	}
+	// });
+	const login = () => {}
 
 	return (
 		<Button className={styles.btn} type="button" variant="outline" onClick={() => login()}>

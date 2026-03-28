@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { Field, FieldContent, FieldDescription, FieldError, FieldLabel, FieldLegend, FieldSeparator, FieldSet, FieldTitle } from './Field';
+import { FieldContent, FieldDescription, FieldError, FieldLabel, FieldLegend, FieldSeparator, FieldSet, FieldTitle } from './Field';
 
 describe('Field components', () => {
 	test('renders FieldSet', () => {
