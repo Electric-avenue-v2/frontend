@@ -1,4 +1,5 @@
-import type { AttributeFilterInput, ProductSort } from '~/shared/api/gql/graphql';
+import { isProductSort } from '~/features/product-sort';
+import { type AttributeFilterInput, ProductSort } from '~/shared/api/gql/graphql';
 
 export type NextSearchParams = { [key: string]: string | string[] | undefined };
 
@@ -46,10 +47,12 @@ export function mapSearchParamsToInput(searchParams: NextSearchParams) {
 	const maxPriceParam = getSingleParam(searchParams.maxPrice);
 	const attrsParam = getSingleParam(searchParams.attrs);
 
+	const parsedSort = isProductSort(sortParam) ? sortParam : ProductSort.Newest;
+
 	return {
 		page: pageParam ? Math.max(1, parseInt(pageParam, 10)) : 1,
 		limit: 24,
-		sort: (sortParam as ProductSort) || 'NEWEST',
+		sort: parsedSort,
 		minPrice: minPriceParam ? parseFloat(minPriceParam) : undefined,
 		maxPrice: maxPriceParam ? parseFloat(maxPriceParam) : undefined,
 		attributes: parseAttributes(attrsParam)

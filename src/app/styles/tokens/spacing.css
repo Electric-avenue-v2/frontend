@@ -2,6 +2,10 @@
     :root {
         --radix-popover-trigger-width: auto;
         --radix-popover-content-transform-origin: center;
+        --radix-select-content-available-height: auto;
+        --radix-select-content-transform-origin: center;
+        --radix-select-trigger-height: auto;
+        --radix-select-trigger-width: auto;
 
         --space-0:    0;
         --space-px:   1px;

@@ -40,19 +40,21 @@ const Page: FC<Props> = async ({ params, searchParams }) => {
 
 	const baseInput = mapSearchParamsToInput(resolvedSearchParams);
 
-	const [{ categoryProducts: products }, { categoryBySlug: category }] = await Promise.all([
+	const [{ categoryBySlug: category }, { categoryProducts: products }] = await Promise.all([
+		serverFetcher(GetCategoryBySlug, { slug: resolvedParams.slug }),
 		serverFetcher(CategoryProductsDocument, {
 			input: {
 				...baseInput,
 				categorySlug: resolvedParams.slug
 			}
-		}),
-		serverFetcher(GetCategoryBySlug, { slug: resolvedParams.slug })
+		})
 	]);
 
 	if (!category) {
 		notFound();
 	}
+
+	console.log(products);
 
 	const DOMAIN_URL = configService.getOrThrow('NEXT_PUBLIC_DOMAIN_URL');
 	const jsonLd = {

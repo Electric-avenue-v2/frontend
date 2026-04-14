@@ -1,8 +1,5 @@
 .container {
-    background-color: var(--color-card);
-    box-shadow: var(--shadow-md);
     padding: var(--space-3);
-    border-radius: var(--radius-md);
 }
 
 .accordion {

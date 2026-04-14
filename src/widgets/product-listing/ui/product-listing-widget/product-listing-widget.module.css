@@ -22,6 +22,24 @@
     display: none;
 }
 
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+}
+
+.wrapper button {
+    height: 36px;
+    border-radius: var(--radius-md);
+}
+
+.listingFilters {
+    background-color: var(--color-card);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-md);
+}
+
 @media (max-width: 1024px) {
     .layout {
         grid-template-columns: 1fr;
@@ -33,6 +51,16 @@
 
     .mobileFilters {
         display: block;
+    }
+
+    .wrapper {
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .wrapper > p {
+        display: none;
     }
 }
 
