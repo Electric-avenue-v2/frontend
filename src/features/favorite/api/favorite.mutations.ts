@@ -11,3 +11,9 @@ export const RemoveFavoriteDocument = graphql(`
 		removeFavorite(productId: $productId)
 	}
 `);
+
+export const SyncFavoriteDocument = graphql(`
+  mutation SyncFavorites($input: SyncFavoritesInput!) {
+    syncFavorites(input: $input)
+  }
+`);

@@ -26,6 +26,7 @@ type Documents = {
     "\n\tmutation ResendOtp($input: ResendOtpInput!) {\n\t\tresendOtp(input: $input) {\n\t\t\tmessage\n\t\t}\n\t}\n": typeof types.ResendOtpDocument,
     "\n\tmutation AddFavorite($productId: String!) {\n\t\taddFavorite(productId: $productId)\n\t}\n": typeof types.AddFavoriteDocument,
     "\n\tmutation RemoveFavorite($productId: String!) {\n\t\tremoveFavorite(productId: $productId)\n\t}\n": typeof types.RemoveFavoriteDocument,
+    "\n  mutation SyncFavorites($input: SyncFavoritesInput!) {\n    syncFavorites(input: $input)\n  }\n": typeof types.SyncFavoritesDocument,
     "\n\tquery SearchSuggestions($input: SearchSuggestionsInput!) {\n\t\tsearchSuggestions(input: $input) {\n\t\t\tid,\n\t\t\ttitle\n\t\t\tslug\n\t\t\tcategorySlug\n\t\t\tcategoryName\n\t\t}\n\t}\n": typeof types.SearchSuggestionsDocument,
 };
 const documents: Documents = {
@@ -41,6 +42,7 @@ const documents: Documents = {
     "\n\tmutation ResendOtp($input: ResendOtpInput!) {\n\t\tresendOtp(input: $input) {\n\t\t\tmessage\n\t\t}\n\t}\n": types.ResendOtpDocument,
     "\n\tmutation AddFavorite($productId: String!) {\n\t\taddFavorite(productId: $productId)\n\t}\n": types.AddFavoriteDocument,
     "\n\tmutation RemoveFavorite($productId: String!) {\n\t\tremoveFavorite(productId: $productId)\n\t}\n": types.RemoveFavoriteDocument,
+    "\n  mutation SyncFavorites($input: SyncFavoritesInput!) {\n    syncFavorites(input: $input)\n  }\n": types.SyncFavoritesDocument,
     "\n\tquery SearchSuggestions($input: SearchSuggestionsInput!) {\n\t\tsearchSuggestions(input: $input) {\n\t\t\tid,\n\t\t\ttitle\n\t\t\tslug\n\t\t\tcategorySlug\n\t\t\tcategoryName\n\t\t}\n\t}\n": types.SearchSuggestionsDocument,
 };
 
@@ -106,6 +108,10 @@ export function graphql(source: "\n\tmutation AddFavorite($productId: String!) {
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n\tmutation RemoveFavorite($productId: String!) {\n\t\tremoveFavorite(productId: $productId)\n\t}\n"): (typeof documents)["\n\tmutation RemoveFavorite($productId: String!) {\n\t\tremoveFavorite(productId: $productId)\n\t}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation SyncFavorites($input: SyncFavoritesInput!) {\n    syncFavorites(input: $input)\n  }\n"): (typeof documents)["\n  mutation SyncFavorites($input: SyncFavoritesInput!) {\n    syncFavorites(input: $input)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

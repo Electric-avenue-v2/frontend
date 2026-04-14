@@ -9,13 +9,46 @@ import { usePasswordToggle } from '~/features/auth/hooks/usePasswordToggle';
 import { loginSchema, type LoginSchema } from '~/features/auth/model/login.schema';
 import { AuthFormShell } from '~/features/auth/ui/auth-form-shell/AuthFormShell';
 import { PasswordField } from '~/features/auth/ui/password-field/PasswordField';
+import { useSyncFavoritesMutation } from '~/features/favorite';
 import { Button } from '~/shared/ui/button/Button';
 import { FormField } from '~/shared/ui/form-field';
 import styles from './login-form.module.css';
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const LoginForm = () => {
 	const searchParams = useSearchParams();
 	const { mutate, isPending } = useLogin();
+	const { mutate: syncFavotites } = useSyncFavoritesMutation();
+
 	const { showPassword, toggle } = usePasswordToggle();
 	const [focusedField, setFocusedField] = useState<keyof LoginSchema | null>(null);
 	const form = useForm<LoginSchema>({
@@ -27,12 +60,19 @@ export const LoginForm = () => {
 	});
 
 	const onSubmit = async (data: LoginSchema) => {
-		mutate({
-			input: {
-				email: data.email,
-				password: data.password
+		mutate(
+			{
+				input: {
+					email: data.email,
+					password: data.password
+				}
+			},
+			{
+				onSuccess: () => {
+					syncFavotites();
+				}
 			}
-		});
+		);
 	};
 
 	const [emailValue, passwordValue] = useWatch({

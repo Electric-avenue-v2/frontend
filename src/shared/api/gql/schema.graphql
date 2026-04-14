@@ -88,6 +88,7 @@ type Mutation {
   register(input: RegisterInput!): UserIdResponse!
   removeFavorite(productId: String!): Boolean!
   resendOtp(input: ResendOtpInput!): MessageResponse!
+  syncFavorites(input: SyncFavoritesInput!): Boolean!
   verifyOtp(input: VerifyOtpInput!): MessageResponse!
 }
 
@@ -255,6 +256,10 @@ type SearchSuggestion {
 
 input SearchSuggestionsInput {
   query: String!
+}
+
+input SyncFavoritesInput {
+  productIds: [String!]!
 }
 
 type Tokens {

@@ -47,9 +47,7 @@ const Page: FC<Props> = async ({ params, searchParams }) => {
 				categorySlug: resolvedParams.slug
 			}
 		}),
-		serverFetcher(GetCategoryBySlug, {
-			slug: resolvedParams.slug
-		})
+		serverFetcher(GetCategoryBySlug, { slug: resolvedParams.slug })
 	]);
 
 	if (!category) {
@@ -79,7 +77,7 @@ const Page: FC<Props> = async ({ params, searchParams }) => {
 			<script
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{
-					__html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+					__html: JSON.stringify(jsonLd).replace(/</g, '\\u003c')
 				}}
 			/>
 			<ProductListingWidget
