@@ -5,8 +5,7 @@ export const GetMeDocument = graphql(`
 		me {
 			id
 			email
-			firstName
-			lastName
+			role
 		}
 	}
 `);

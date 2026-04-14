@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { type ReactNode } from 'react';
-import { GoogleAuthProvider } from '~/app/providers';
+// import { GoogleAuthProvider } from '~/app/providers';
 import { Card } from '~/shared/ui/card';
 import { Logo } from '~/shared/ui/logo';
 import styles from './layout.module.css';

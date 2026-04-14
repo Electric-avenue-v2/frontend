@@ -1,0 +1,55 @@
+.backButton {
+	position: absolute;
+	left: 0.35rem;
+	top: 0.39rem;
+	border-radius: var(--radius-sm);
+	background: transparent;
+	border: var(--border-none);
+	opacity: 0.7;
+	cursor: pointer;
+	transition: opacity 0.2s;
+}
+
+.backButton:hover {
+	opacity: 1;
+}
+
+.backButton:focus {
+	outline: var(--outline-none);
+	box-shadow: var(--shadow-ring);
+}
+
+.backButton > svg {
+	width: 1rem;
+	height: 1rem;
+}
+
+.gridIcon {
+	width: 1.1rem;
+	height: 1.1rem;
+}
+
+.title {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.dialogContent {
+    width: 20rem;
+	max-width: calc(100vw - 1rem);
+	height: 60vh;
+	padding: 0;
+}
+
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	min-height: 0;
+}
+
+.header {
+	flex-shrink: 0;
+	padding: 1rem 1rem 0;
+	position: relative;
+}

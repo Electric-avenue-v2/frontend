@@ -1,14 +1,18 @@
 import type { ReactNode } from 'react';
-// import { Header } from '~/widgets/header/ui/Header';
-import styles from './styles.module.css'
+import { BottomNavigation } from '~/widgets/bottom-navigation';
+import { Header } from '~/widgets/header';
+import styles from './styles.module.css';
 
 const Layout = ({ children }: { children: ReactNode }) => {
 	return (
-		<>
-			{/*<Header />*/}
+		<div className={styles.layout}>
+			<Header />
 			<main className={styles.main}>{children}</main>
+			<div className={styles.bottomNavWrapper}>
+				<BottomNavigation />
+			</div>
 			{/*<footer></footer>*/}
-		</>
+		</div>
 	);
 };
 

@@ -1,3 +1,14 @@
+type AttributeAggregation {
+  name: String!
+  slug: String!
+  values: [AttributeValueAggregation!]!
+}
+
+input AttributeFilterInput {
+  slug: String!
+  values: [String!]!
+}
+
 type AttributeInfo {
   id: ID!
   name: String!
@@ -10,11 +21,29 @@ type AttributeValue {
   value: String!
 }
 
+type AttributeValueAggregation {
+  count: Int!
+  value: String!
+}
+
 type Category {
   icon: String
   id: ID!
   name: String!
   parentId: String
+  slug: String!
+}
+
+input CategoryProductsInput {
+  attributes: [AttributeFilterInput!]
+  categorySlug: String!
+  inStock: Boolean
+  limit: Int! = 24
+  maxPrice: Float
+  minPrice: Float
+  page: Int! = 1
+  query: String
+  sort: ProductSort! = NEWEST
 }
 
 input CreateProductInput {
@@ -39,16 +68,6 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-input GetProductsInput {
-  attributes: [ProductAttributeFilter!]
-  categoryId: String
-  limit: Int! = 20
-  maxPrice: Float
-  minPrice: Float
-  offset: Int! = 0
-  search: String
-}
-
 input LoginInput {
   email: String!
   password: String!
@@ -59,19 +78,31 @@ type MessageResponse {
 }
 
 type Mutation {
+  addFavorite(productId: String!): Boolean!
   createProduct(createProductInput: CreateProductInput!): ProductDetails!
   deleteProduct(id: String!): ProductDetails!
+  invalidateCategoriesCache: Boolean!
   login(input: LoginInput!): Tokens!
   logout: MessageResponse!
   refresh: Tokens!
   register(input: RegisterInput!): UserIdResponse!
+  removeFavorite(productId: String!): Boolean!
   resendOtp(input: ResendOtpInput!): MessageResponse!
   verifyOtp(input: VerifyOtpInput!): MessageResponse!
 }
 
-input ProductAttributeFilter {
-  slug: String!
-  values: [String!]!
+type PaginationMeta {
+  currentPage: Int!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  itemsPerPage: Int!
+  totalItems: Int!
+  totalPages: Int!
+}
+
+type PriceRangeAggregation {
+  max: Float!
+  min: Float!
 }
 
 input ProductAttributeInput {
@@ -95,7 +126,6 @@ interface ProductBase {
   thumbnail: String
   title: String!
   updatedAt: DateTime!
-  variantsCount: Int!
 }
 
 type ProductCategory {
@@ -123,7 +153,6 @@ type ProductDetails implements ProductBase {
   title: String!
   updatedAt: DateTime!
   variants: [ProductVariant!]!
-  variantsCount: Int!
 }
 
 type ProductImage {
@@ -137,33 +166,31 @@ input ProductImageInput {
   url: String!
 }
 
-type ProductListItem implements ProductBase {
-  category: ProductCategory!
-  createdAt: DateTime!
-  id: ID!
-
-  """Min price of variants"""
-  minPrice: Float
+type ProductListItem {
+  categoryName: String!
+  categorySlug: String!
+  id: String!
+  inStock: Boolean!
+  isLiked: Boolean
+  maxPrice: Float!
+  minPrice: Float!
+  sellerId: String!
   slug: String!
-
-  """Main picture"""
-  thumbnail: String
+  thumbnailUrl: String
   title: String!
-  updatedAt: DateTime!
-
-  """Quantity of goods"""
-  variantsCount: Int!
-}
-
-type ProductPagination {
-  items: [ProductListItem!]!
-  total: Int!
 }
 
 type ProductSeller {
   firstName: String!
   id: ID!
   lastName: String!
+}
+
+enum ProductSort {
+  NEWEST
+  POPULAR
+  PRICE_ASC
+  PRICE_DESC
 }
 
 type ProductVariant {
@@ -177,10 +204,12 @@ type ProductVariant {
 
 type Query {
   categories: [Category!]!
-  hello: String!
+  categoryBySlug(slug: String!): Category
+  categoryProducts(input: CategoryProductsInput!): SearchResult!
   me: UserModel
   product(id: String!): ProductDetails!
-  products(query: GetProductsInput!): ProductPagination!
+  searchProducts(input: SearchProductsInput!): SearchResult!
+  searchSuggestions(input: SearchSuggestionsInput!): [SearchSuggestion!]!
 }
 
 input RegisterInput {
@@ -192,6 +221,40 @@ input RegisterInput {
 
 input ResendOtpInput {
   email: String!
+}
+
+type SearchAggregations {
+  attributes: [AttributeAggregation!]!
+  priceRange: PriceRangeAggregation
+}
+
+input SearchProductsInput {
+  attributes: [AttributeFilterInput!]
+  inStock: Boolean
+  limit: Int! = 24
+  maxPrice: Float
+  minPrice: Float
+  page: Int! = 1
+  query: String
+  sort: ProductSort! = NEWEST
+}
+
+type SearchResult {
+  aggregations: SearchAggregations!
+  items: [ProductListItem!]!
+  pagination: PaginationMeta!
+}
+
+type SearchSuggestion {
+  categoryName: String!
+  categorySlug: String!
+  id: ID!
+  slug: String!
+  title: String!
+}
+
+input SearchSuggestionsInput {
+  query: String!
 }
 
 type Tokens {
@@ -210,7 +273,13 @@ type UserModel {
   firstName: String!
   id: ID!
   lastName: String!
+  role: UserRole!
   updatedAt: DateTime!
+}
+
+enum UserRole {
+  ADMIN
+  USER
 }
 
 input VerifyOtpInput {

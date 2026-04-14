@@ -14,20 +14,34 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n\tquery Me {\n\t\tme {\n\t\t\tid\n\t\t\temail\n\t\t\tfirstName\n\t\t\tlastName\n\t\t}\n\t}\n": typeof types.MeDocument,
+    "\n\tquery GetCategories {\n\t\tcategories {\n\t\t\tid\n\t\t\tname\n\t\t\tslug\n\t\t\ticon\n\t\t\tparentId\n\t\t}\n\t}\n": typeof types.GetCategoriesDocument,
+    "\n\tquery GetCategoryBySlug($slug: String!) {\n\t\tcategoryBySlug(slug: $slug) {\n\t\t\tid\n\t\t\tname\n\t\t\tslug\n\t\t\ticon\n\t\t}\n\t}\n": typeof types.GetCategoryBySlugDocument,
+    "\n\tquery searchProducts($input: SearchProductsInput!) {\n\t\tsearchProducts(input: $input) {\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\ttitle\n\t\t\t\tslug\n\t\t\t\tminPrice\n\t\t\t\tmaxPrice\n\t\t\t\tinStock\n\t\t\t\tthumbnailUrl\n\t\t\t\tcategorySlug\n\t\t\t\tcategoryName\n\t\t\t}\n\t\t\tpagination {\n\t\t\t\tcurrentPage\n\t\t\t\ttotalPages\n\t\t\t\ttotalItems\n\t\t\t\titemsPerPage\n\t\t\t\thasNextPage\n\t\t\t\thasPrevPage\n\t\t\t}\n\t\t\taggregations {\n\t\t\t\tattributes {\n\t\t\t\t\tslug\n\t\t\t\t\tname\n\t\t\t\t\tvalues {\n\t\t\t\t\t\tvalue\n\t\t\t\t\t\tcount\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tpriceRange {\n\t\t\t\t\tmin\n\t\t\t\t\tmax\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n": typeof types.SearchProductsDocument,
+    "\n\tquery categoryProducts($input: CategoryProductsInput!) {\n\t\tcategoryProducts(input: $input) {\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\ttitle\n\t\t\t\tsellerId\n\t\t\t\tslug\n\t\t\t\tminPrice\n\t\t\t\tmaxPrice\n\t\t\t\tinStock\n\t\t\t\tthumbnailUrl\n\t\t\t\tcategorySlug\n\t\t\t\tcategoryName\n\t\t\t\tisLiked\n\t\t\t}\n\t\t\tpagination {\n\t\t\t\tcurrentPage\n\t\t\t\ttotalPages\n\t\t\t\ttotalItems\n\t\t\t\titemsPerPage\n\t\t\t\thasNextPage\n\t\t\t\thasPrevPage\n\t\t\t}\n\t\t\taggregations {\n\t\t\t\tattributes {\n\t\t\t\t\tslug\n\t\t\t\t\tname\n\t\t\t\t\tvalues {\n\t\t\t\t\t\tvalue\n\t\t\t\t\t\tcount\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tpriceRange {\n\t\t\t\t\tmin\n\t\t\t\t\tmax\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n": typeof types.CategoryProductsDocument,
+    "\n\tquery Me {\n\t\tme {\n\t\t\tid\n\t\t\temail\n\t\t\trole\n\t\t}\n\t}\n": typeof types.MeDocument,
     "\n\tmutation Register($input: RegisterInput!) {\n\t\tregister(input: $input) {\n\t\t\tuserId\n\t\t}\n\t}\n": typeof types.RegisterDocument,
     "\n\tmutation Login($input: LoginInput!) {\n\t\tlogin(input: $input) {\n\t\t\taccessToken\n\t\t\trefreshToken\n\t\t}\n\t}\n": typeof types.LoginDocument,
     "\n\tmutation Logout {\n\t\tlogout {\n\t\t\tmessage\n\t\t}\n\t}\n": typeof types.LogoutDocument,
     "\n\tmutation VerifyOtp($input: VerifyOtpInput!) {\n\t\tverifyOtp(input: $input) {\n\t\t\tmessage\n\t\t}\n\t}\n": typeof types.VerifyOtpDocument,
     "\n\tmutation ResendOtp($input: ResendOtpInput!) {\n\t\tresendOtp(input: $input) {\n\t\t\tmessage\n\t\t}\n\t}\n": typeof types.ResendOtpDocument,
+    "\n\tmutation AddFavorite($productId: String!) {\n\t\taddFavorite(productId: $productId)\n\t}\n": typeof types.AddFavoriteDocument,
+    "\n\tmutation RemoveFavorite($productId: String!) {\n\t\tremoveFavorite(productId: $productId)\n\t}\n": typeof types.RemoveFavoriteDocument,
+    "\n\tquery SearchSuggestions($input: SearchSuggestionsInput!) {\n\t\tsearchSuggestions(input: $input) {\n\t\t\tid,\n\t\t\ttitle\n\t\t\tslug\n\t\t\tcategorySlug\n\t\t\tcategoryName\n\t\t}\n\t}\n": typeof types.SearchSuggestionsDocument,
 };
 const documents: Documents = {
-    "\n\tquery Me {\n\t\tme {\n\t\t\tid\n\t\t\temail\n\t\t\tfirstName\n\t\t\tlastName\n\t\t}\n\t}\n": types.MeDocument,
+    "\n\tquery GetCategories {\n\t\tcategories {\n\t\t\tid\n\t\t\tname\n\t\t\tslug\n\t\t\ticon\n\t\t\tparentId\n\t\t}\n\t}\n": types.GetCategoriesDocument,
+    "\n\tquery GetCategoryBySlug($slug: String!) {\n\t\tcategoryBySlug(slug: $slug) {\n\t\t\tid\n\t\t\tname\n\t\t\tslug\n\t\t\ticon\n\t\t}\n\t}\n": types.GetCategoryBySlugDocument,
+    "\n\tquery searchProducts($input: SearchProductsInput!) {\n\t\tsearchProducts(input: $input) {\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\ttitle\n\t\t\t\tslug\n\t\t\t\tminPrice\n\t\t\t\tmaxPrice\n\t\t\t\tinStock\n\t\t\t\tthumbnailUrl\n\t\t\t\tcategorySlug\n\t\t\t\tcategoryName\n\t\t\t}\n\t\t\tpagination {\n\t\t\t\tcurrentPage\n\t\t\t\ttotalPages\n\t\t\t\ttotalItems\n\t\t\t\titemsPerPage\n\t\t\t\thasNextPage\n\t\t\t\thasPrevPage\n\t\t\t}\n\t\t\taggregations {\n\t\t\t\tattributes {\n\t\t\t\t\tslug\n\t\t\t\t\tname\n\t\t\t\t\tvalues {\n\t\t\t\t\t\tvalue\n\t\t\t\t\t\tcount\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tpriceRange {\n\t\t\t\t\tmin\n\t\t\t\t\tmax\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n": types.SearchProductsDocument,
+    "\n\tquery categoryProducts($input: CategoryProductsInput!) {\n\t\tcategoryProducts(input: $input) {\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\ttitle\n\t\t\t\tsellerId\n\t\t\t\tslug\n\t\t\t\tminPrice\n\t\t\t\tmaxPrice\n\t\t\t\tinStock\n\t\t\t\tthumbnailUrl\n\t\t\t\tcategorySlug\n\t\t\t\tcategoryName\n\t\t\t\tisLiked\n\t\t\t}\n\t\t\tpagination {\n\t\t\t\tcurrentPage\n\t\t\t\ttotalPages\n\t\t\t\ttotalItems\n\t\t\t\titemsPerPage\n\t\t\t\thasNextPage\n\t\t\t\thasPrevPage\n\t\t\t}\n\t\t\taggregations {\n\t\t\t\tattributes {\n\t\t\t\t\tslug\n\t\t\t\t\tname\n\t\t\t\t\tvalues {\n\t\t\t\t\t\tvalue\n\t\t\t\t\t\tcount\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tpriceRange {\n\t\t\t\t\tmin\n\t\t\t\t\tmax\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n": types.CategoryProductsDocument,
+    "\n\tquery Me {\n\t\tme {\n\t\t\tid\n\t\t\temail\n\t\t\trole\n\t\t}\n\t}\n": types.MeDocument,
     "\n\tmutation Register($input: RegisterInput!) {\n\t\tregister(input: $input) {\n\t\t\tuserId\n\t\t}\n\t}\n": types.RegisterDocument,
     "\n\tmutation Login($input: LoginInput!) {\n\t\tlogin(input: $input) {\n\t\t\taccessToken\n\t\t\trefreshToken\n\t\t}\n\t}\n": types.LoginDocument,
     "\n\tmutation Logout {\n\t\tlogout {\n\t\t\tmessage\n\t\t}\n\t}\n": types.LogoutDocument,
     "\n\tmutation VerifyOtp($input: VerifyOtpInput!) {\n\t\tverifyOtp(input: $input) {\n\t\t\tmessage\n\t\t}\n\t}\n": types.VerifyOtpDocument,
     "\n\tmutation ResendOtp($input: ResendOtpInput!) {\n\t\tresendOtp(input: $input) {\n\t\t\tmessage\n\t\t}\n\t}\n": types.ResendOtpDocument,
+    "\n\tmutation AddFavorite($productId: String!) {\n\t\taddFavorite(productId: $productId)\n\t}\n": types.AddFavoriteDocument,
+    "\n\tmutation RemoveFavorite($productId: String!) {\n\t\tremoveFavorite(productId: $productId)\n\t}\n": types.RemoveFavoriteDocument,
+    "\n\tquery SearchSuggestions($input: SearchSuggestionsInput!) {\n\t\tsearchSuggestions(input: $input) {\n\t\t\tid,\n\t\t\ttitle\n\t\t\tslug\n\t\t\tcategorySlug\n\t\t\tcategoryName\n\t\t}\n\t}\n": types.SearchSuggestionsDocument,
 };
 
 /**
@@ -47,7 +61,23 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n\tquery Me {\n\t\tme {\n\t\t\tid\n\t\t\temail\n\t\t\tfirstName\n\t\t\tlastName\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery Me {\n\t\tme {\n\t\t\tid\n\t\t\temail\n\t\t\tfirstName\n\t\t\tlastName\n\t\t}\n\t}\n"];
+export function graphql(source: "\n\tquery GetCategories {\n\t\tcategories {\n\t\t\tid\n\t\t\tname\n\t\t\tslug\n\t\t\ticon\n\t\t\tparentId\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetCategories {\n\t\tcategories {\n\t\t\tid\n\t\t\tname\n\t\t\tslug\n\t\t\ticon\n\t\t\tparentId\n\t\t}\n\t}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n\tquery GetCategoryBySlug($slug: String!) {\n\t\tcategoryBySlug(slug: $slug) {\n\t\t\tid\n\t\t\tname\n\t\t\tslug\n\t\t\ticon\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetCategoryBySlug($slug: String!) {\n\t\tcategoryBySlug(slug: $slug) {\n\t\t\tid\n\t\t\tname\n\t\t\tslug\n\t\t\ticon\n\t\t}\n\t}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n\tquery searchProducts($input: SearchProductsInput!) {\n\t\tsearchProducts(input: $input) {\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\ttitle\n\t\t\t\tslug\n\t\t\t\tminPrice\n\t\t\t\tmaxPrice\n\t\t\t\tinStock\n\t\t\t\tthumbnailUrl\n\t\t\t\tcategorySlug\n\t\t\t\tcategoryName\n\t\t\t}\n\t\t\tpagination {\n\t\t\t\tcurrentPage\n\t\t\t\ttotalPages\n\t\t\t\ttotalItems\n\t\t\t\titemsPerPage\n\t\t\t\thasNextPage\n\t\t\t\thasPrevPage\n\t\t\t}\n\t\t\taggregations {\n\t\t\t\tattributes {\n\t\t\t\t\tslug\n\t\t\t\t\tname\n\t\t\t\t\tvalues {\n\t\t\t\t\t\tvalue\n\t\t\t\t\t\tcount\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tpriceRange {\n\t\t\t\t\tmin\n\t\t\t\t\tmax\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery searchProducts($input: SearchProductsInput!) {\n\t\tsearchProducts(input: $input) {\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\ttitle\n\t\t\t\tslug\n\t\t\t\tminPrice\n\t\t\t\tmaxPrice\n\t\t\t\tinStock\n\t\t\t\tthumbnailUrl\n\t\t\t\tcategorySlug\n\t\t\t\tcategoryName\n\t\t\t}\n\t\t\tpagination {\n\t\t\t\tcurrentPage\n\t\t\t\ttotalPages\n\t\t\t\ttotalItems\n\t\t\t\titemsPerPage\n\t\t\t\thasNextPage\n\t\t\t\thasPrevPage\n\t\t\t}\n\t\t\taggregations {\n\t\t\t\tattributes {\n\t\t\t\t\tslug\n\t\t\t\t\tname\n\t\t\t\t\tvalues {\n\t\t\t\t\t\tvalue\n\t\t\t\t\t\tcount\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tpriceRange {\n\t\t\t\t\tmin\n\t\t\t\t\tmax\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n\tquery categoryProducts($input: CategoryProductsInput!) {\n\t\tcategoryProducts(input: $input) {\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\ttitle\n\t\t\t\tsellerId\n\t\t\t\tslug\n\t\t\t\tminPrice\n\t\t\t\tmaxPrice\n\t\t\t\tinStock\n\t\t\t\tthumbnailUrl\n\t\t\t\tcategorySlug\n\t\t\t\tcategoryName\n\t\t\t\tisLiked\n\t\t\t}\n\t\t\tpagination {\n\t\t\t\tcurrentPage\n\t\t\t\ttotalPages\n\t\t\t\ttotalItems\n\t\t\t\titemsPerPage\n\t\t\t\thasNextPage\n\t\t\t\thasPrevPage\n\t\t\t}\n\t\t\taggregations {\n\t\t\t\tattributes {\n\t\t\t\t\tslug\n\t\t\t\t\tname\n\t\t\t\t\tvalues {\n\t\t\t\t\t\tvalue\n\t\t\t\t\t\tcount\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tpriceRange {\n\t\t\t\t\tmin\n\t\t\t\t\tmax\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery categoryProducts($input: CategoryProductsInput!) {\n\t\tcategoryProducts(input: $input) {\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\ttitle\n\t\t\t\tsellerId\n\t\t\t\tslug\n\t\t\t\tminPrice\n\t\t\t\tmaxPrice\n\t\t\t\tinStock\n\t\t\t\tthumbnailUrl\n\t\t\t\tcategorySlug\n\t\t\t\tcategoryName\n\t\t\t\tisLiked\n\t\t\t}\n\t\t\tpagination {\n\t\t\t\tcurrentPage\n\t\t\t\ttotalPages\n\t\t\t\ttotalItems\n\t\t\t\titemsPerPage\n\t\t\t\thasNextPage\n\t\t\t\thasPrevPage\n\t\t\t}\n\t\t\taggregations {\n\t\t\t\tattributes {\n\t\t\t\t\tslug\n\t\t\t\t\tname\n\t\t\t\t\tvalues {\n\t\t\t\t\t\tvalue\n\t\t\t\t\t\tcount\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tpriceRange {\n\t\t\t\t\tmin\n\t\t\t\t\tmax\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n\tquery Me {\n\t\tme {\n\t\t\tid\n\t\t\temail\n\t\t\trole\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery Me {\n\t\tme {\n\t\t\tid\n\t\t\temail\n\t\t\trole\n\t\t}\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -68,6 +98,18 @@ export function graphql(source: "\n\tmutation VerifyOtp($input: VerifyOtpInput!)
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n\tmutation ResendOtp($input: ResendOtpInput!) {\n\t\tresendOtp(input: $input) {\n\t\t\tmessage\n\t\t}\n\t}\n"): (typeof documents)["\n\tmutation ResendOtp($input: ResendOtpInput!) {\n\t\tresendOtp(input: $input) {\n\t\t\tmessage\n\t\t}\n\t}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n\tmutation AddFavorite($productId: String!) {\n\t\taddFavorite(productId: $productId)\n\t}\n"): (typeof documents)["\n\tmutation AddFavorite($productId: String!) {\n\t\taddFavorite(productId: $productId)\n\t}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n\tmutation RemoveFavorite($productId: String!) {\n\t\tremoveFavorite(productId: $productId)\n\t}\n"): (typeof documents)["\n\tmutation RemoveFavorite($productId: String!) {\n\t\tremoveFavorite(productId: $productId)\n\t}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n\tquery SearchSuggestions($input: SearchSuggestionsInput!) {\n\t\tsearchSuggestions(input: $input) {\n\t\t\tid,\n\t\t\ttitle\n\t\t\tslug\n\t\t\tcategorySlug\n\t\t\tcategoryName\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery SearchSuggestions($input: SearchSuggestionsInput!) {\n\t\tsearchSuggestions(input: $input) {\n\t\t\tid,\n\t\t\ttitle\n\t\t\tslug\n\t\t\tcategorySlug\n\t\t\tcategoryName\n\t\t}\n\t}\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

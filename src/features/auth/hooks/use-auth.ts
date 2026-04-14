@@ -1,20 +1,20 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { clientFetcher } from '~/shared/api/client-fetcher';
 import { GetMeDocument } from '~/entities/user';
+import { clientFetcher } from '~/shared/api/client-fetcher';
 
 export function useAuth() {
 	const { data, isLoading } = useQuery({
 		queryKey: ['me'],
-		queryFn: () => clientFetcher(GetMeDocument),
+		queryFn: () => clientFetcher(GetMeDocument, undefined, { redirectOnUnauth: false }),
 		retry: false,
-		staleTime: 1000 * 60 * 5,
+		staleTime: 1000 * 60 * 5
 	});
 
 	return {
 		user: data?.me ?? null,
-		isAuthenticated: !!data?.me,
-		isLoading,
+		isAuth: !!data?.me,
+		isLoading
 	};
 }

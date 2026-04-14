@@ -1,0 +1,8 @@
+.wrapper {
+    width: 100%;
+}
+
+.popover {
+    width: var(--radix-popover-trigger-width);
+    padding: 0;
+}

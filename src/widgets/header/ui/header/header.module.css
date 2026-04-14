@@ -1,0 +1,73 @@
+.header {
+	background-color: var(--color-card);
+	padding: var(--space-2) var(--space-2-5);
+	border-radius: var(--radius-xl);
+	box-shadow: var(--shadow-md);
+	margin: var(--space-2) 0 var(--space-4);
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	gap: var(--space-4);
+}
+
+.searchBarWrapper {
+	flex: 1;
+}
+
+.searchBar {
+	max-width: 850px;
+	margin: auto;
+}
+
+.headerActions {
+	flex-direction: row-reverse;
+}
+
+.headerActions > a {
+	color: color-mix(in oklch, var(--color-fg-muted), black 20%);
+}
+
+@media screen and (width < 520px) {
+	.header {
+		gap: var(--space-1);
+	}
+
+	.headerActions {
+		display: none;
+	}
+}
+
+@media screen and (min-width: 1025px) {
+	.mobileMenu {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.logo {
+		display: none;
+	}
+
+	.categoryTrigger {
+		display: none;
+	}
+
+	.header > *:not(.searchBarWrapper) {
+		transition: opacity 0.2s ease, width 0.2s ease;
+		overflow: hidden;
+		flex-shrink: 0;
+	}
+
+	.header:has(.searchBarWrapper:focus-within) > *:not(.searchBarWrapper) {
+		opacity: 0;
+		width: 0;
+	}
+
+	.searchBarWrapper {
+		transition: flex 0.2s ease;
+	}
+
+	.header:has(.searchBarWrapper:focus-within) .searchBarWrapper {
+		flex: 1 1 100%;
+	}
+}

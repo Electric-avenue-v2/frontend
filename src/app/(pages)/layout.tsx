@@ -1,14 +1,14 @@
 // _layers.css must be first
 import '../styles/_layers.css';
 // import { SpeedInsights } from '@vercel/speed-insights/next';
-import { type Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import React, { type ReactNode } from 'react';
 import { Providers } from '~/app/providers';
+import { configService } from '~/shared/config';
 import { Toaster } from '~/shared/ui/toaster';
 import '../styles/index.css';
 import styles from './layout.module.css';
-import { configService } from '~/shared/config';
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -28,7 +28,13 @@ export const metadata: Metadata = {
 		default: 'Electric Avenue',
 		template: '%s | Electric Avenue'
 	},
-	description: 'Marketplace for electronics',
+	description: 'Marketplace for electronics'
+};
+
+export const viewport: Viewport = {
+	width: 'device-width',
+	initialScale: 1,
+	viewportFit: 'cover'
 };
 
 const RootLayout = ({ children }: { children: ReactNode }) => {

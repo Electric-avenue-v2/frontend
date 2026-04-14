@@ -1,11 +1,11 @@
 'use client';
 
-import { type CodeResponse, useGoogleLogin } from '@react-oauth/google';
+// import { type CodeResponse, useGoogleLogin } from '@react-oauth/google';
 import { Button } from '~/shared/ui/button/Button';
 import { GoogleIcon } from '~/shared/ui/google-icon';
 import styles from './google-login-btn.module.css';
 
-type GoogleAuthCodeResponse = Omit<CodeResponse, 'error' | 'error_description' | 'error_uri'>;
+// type GoogleAuthCodeResponse = Omit<CodeResponse, 'error' | 'error_description' | 'error_uri'>;
 
 export const GoogleLoginButton = () => {
 	// const login = useGoogleLogin({

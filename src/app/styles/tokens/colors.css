@@ -79,6 +79,7 @@
 		--color-secondary-hover: var(--palette-neutral-200);
 
 		--color-accent: var(--palette-violet-600);
+		--color-accent-hover: color-mix(in oklch, var(--color-accent), black 10%);
 		--color-accent-fg: var(--palette-neutral-0);
 		--color-accent-subtle: var(--palette-violet-50);
 		--color-accent-muted: var(--palette-violet-100);

@@ -1,8 +1,8 @@
 'use client';
 
+import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { ClientError, GraphQLClient, type Variables } from 'graphql-request';
 import { configService } from '~/shared/config';
-import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 
 let isRefreshing = false;
 let refreshPromise: Promise<boolean> | null = null;
@@ -39,7 +39,8 @@ function isUnauthenticatedError(error: unknown): boolean {
 
 export const clientFetcher = async <T, V extends Variables = Variables>(
 	document: TypedDocumentNode<T, V>,
-	variables?: V
+	variables?: V,
+	options: { redirectOnUnauth?: boolean } = { redirectOnUnauth: true }
 ): Promise<T> => {
 	try {
 		const result = variables
@@ -63,10 +64,12 @@ export const clientFetcher = async <T, V extends Variables = Variables>(
 			});
 		}
 
-		const success = await refreshPromise!;
+		const success = await refreshPromise;
 
 		if (!success) {
-			window.location.href = '/auth/login';
+			if (options.redirectOnUnauth) {
+				window.location.href = '/auth/login';
+			}
 			throw error;
 		}
 

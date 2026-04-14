@@ -38,7 +38,7 @@
 	}
 
 	.button:disabled {
-		opacity: .7;
+		opacity: 0.7;
 		cursor: not-allowed;
 		pointer-events: none;
 	}
@@ -51,10 +51,8 @@
 	}
 
 	.button[data-variant='default'] {
-		/*background-color: var(--color-primary);*/
-		background-color: black;
-		/*color: var(--color-primary-fg);*/
-		color: white;
+		background-color: var(--color-primary);
+		color: var(--color-primary-fg);
 		border-color: var(--color-primary);
 	}
 

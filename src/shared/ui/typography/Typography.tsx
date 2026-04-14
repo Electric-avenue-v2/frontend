@@ -118,7 +118,7 @@ function Typography<C extends React.ElementType = 'p'>({
 				leading && styles[`leading-${leading}`],
 				truncate && styles.truncate,
 				clamp && styles.clamp,
-				clamp && styles[`clamp-${clamp}`],
+				clamp && styles[`clamp${clamp}`],
 				className
 			)}
 			{...rest}

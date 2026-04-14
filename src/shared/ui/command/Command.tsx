@@ -10,12 +10,14 @@ function Command({ className, ...props }: React.ComponentProps<typeof CommandPri
 	return <CommandPrimitive className={clsx(styles.command, className)} {...props} />;
 }
 
-function CommandInput({
-	className,
-	...props
-}: React.ComponentProps<typeof CommandPrimitive.Input>) {
+interface CommandInputProps extends React.ComponentProps<typeof CommandPrimitive.Input> {
+	wrapperProps?: React.ComponentProps<'div'>;
+}
+
+function CommandInput({ className, wrapperProps = {}, ...props }: CommandInputProps) {
+	const { className: wrapperClassName, ...rest } = wrapperProps;
 	return (
-		<div className={styles.inputWrapper}>
+		<div className={clsx(styles.inputWrapper, wrapperClassName)} {...rest}>
 			<SearchIcon className={styles.icon} />
 			<CommandPrimitive.Input className={clsx(styles.input, className)} {...props} />
 		</div>

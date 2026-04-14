@@ -1,0 +1,113 @@
+@layer components {
+    .popoverContent {
+        z-index: var(--z-raised);
+        display: flex;
+        width: 18rem;
+        flex-direction: column;
+        gap: var(--space-2-5);
+
+        border-radius: var(--radius-lg);
+        background: var(--color-popover);
+        color: var(--color-popover-fg);
+        padding: var(--space-2-5);
+        box-shadow: var(--shadow-md);
+        outline: var(--outline-none);
+        border: var(--border-1) solid color-mix(in oklch, var(--color-fg), transparent 90%);
+        transform-origin: var(--radix-popover-content-transform-origin);
+        animation-duration: var(--duration-fast);
+    }
+
+    .popoverContent[data-state='open'] {
+        animation: fadeIn var(--duration-fast) ease-out, zoomIn var(--duration-fast) ease-out;
+    }
+
+    .popoverContent[data-state='closed'] {
+        animation: fadeOut var(--duration-fast) ease-in, zoomOut var(--duration-fast) ease-in;
+    }
+
+    .popoverContent[data-side='bottom'] {
+        animation-name: slideFromTop;
+    }
+
+    .popoverContent[data-side='top'] {
+        animation-name: slideFromBottom;
+    }
+
+    .popoverContent[data-side='left'] {
+        animation-name: slideFromRight;
+    }
+
+    .popoverContent[data-side='right'] {
+        animation-name: slideFromLeft;
+    }
+
+    @keyframes zoomIn {
+        from {
+            transform: scale(0.95);
+        }
+        to {
+            transform: scale(1);
+        }
+    }
+
+    @keyframes zoomOut {
+        from {
+            transform: scale(1);
+        }
+        to {
+            transform: scale(0.95);
+        }
+    }
+
+    @keyframes slideFromTop {
+        from {
+            transform: translateY(-8px);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideFromBottom {
+        from {
+            transform: translateY(8px);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideFromLeft {
+        from {
+            transform: translateX(-8px);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideFromRight {
+        from {
+            transform: translateX(8px);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    .header {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-0-5);
+        font-size: var(--text-sm);
+    }
+
+    .title {
+        font-weight: var(--font-medium);
+    }
+
+    .description {
+        color: var(--color-fg-muted);
+        font-size: var(--text-sm);
+    }
+}

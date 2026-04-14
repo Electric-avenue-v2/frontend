@@ -1,0 +1,69 @@
+@layer components {
+    .root {
+        position: relative;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        touch-action: none;
+        user-select: none;
+    }
+
+    .track {
+        position: relative;
+        flex-grow: 1;
+        height: 4px;
+        width: 100%;
+        border-radius: var(--radius-full);
+        background-color: var(--color-secondary);
+        overflow: hidden;
+    }
+
+    .range {
+        position: absolute;
+        height: 100%;
+        background-color: var(--color-accent);
+    }
+
+    .thumb {
+        position: relative;
+        display: block;
+        width: 14px;
+        height: 14px;
+        border-radius: var(--radius-full);
+        background-color: var(--color-fg-inverted);
+        border: var(--border-1) solid var(--color-border);
+        cursor: pointer;
+    }
+
+    .thumb:hover {
+        box-shadow: 0 0 0 4px color-mix(in oklch, var(--color-fg-subtle) 15%, transparent);
+    }
+
+    .thumb:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 4px color-mix(in oklch, var(--color-fg-subtle) 20%, transparent);
+    }
+
+    .root[data-disabled] {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .root[data-disabled] .range {
+        background-color: var(--color-fg-subtle);
+    }
+
+    .root[data-disabled] .thumb {
+        cursor: not-allowed;
+        box-shadow: none;
+    }
+
+    .root[data-disabled] .thumb:hover {
+        box-shadow: none;
+    }
+
+    .root[data-disabled] .thumb:focus-visible {
+        box-shadow: none;
+        outline: var(--outline-none);
+    }
+}

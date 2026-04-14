@@ -18,6 +18,18 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
+export type AttributeAggregation = {
+  __typename?: 'AttributeAggregation';
+  name: Scalars['String']['output'];
+  slug: Scalars['String']['output'];
+  values: Array<AttributeValueAggregation>;
+};
+
+export type AttributeFilterInput = {
+  slug: Scalars['String']['input'];
+  values: Array<Scalars['String']['input']>;
+};
+
 export type AttributeInfo = {
   __typename?: 'AttributeInfo';
   id: Scalars['ID']['output'];
@@ -32,12 +44,31 @@ export type AttributeValue = {
   value: Scalars['String']['output'];
 };
 
+export type AttributeValueAggregation = {
+  __typename?: 'AttributeValueAggregation';
+  count: Scalars['Int']['output'];
+  value: Scalars['String']['output'];
+};
+
 export type Category = {
   __typename?: 'Category';
   icon?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
   parentId?: Maybe<Scalars['String']['output']>;
+  slug: Scalars['String']['output'];
+};
+
+export type CategoryProductsInput = {
+  attributes?: InputMaybe<Array<AttributeFilterInput>>;
+  categorySlug: Scalars['String']['input'];
+  inStock?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: Scalars['Int']['input'];
+  maxPrice?: InputMaybe<Scalars['Float']['input']>;
+  minPrice?: InputMaybe<Scalars['Float']['input']>;
+  page?: Scalars['Int']['input'];
+  query?: InputMaybe<Scalars['String']['input']>;
+  sort?: ProductSort;
 };
 
 export type CreateProductInput = {
@@ -57,16 +88,6 @@ export type CreateVariantInput = {
   stock: Scalars['Int']['input'];
 };
 
-export type GetProductsInput = {
-  attributes?: InputMaybe<Array<ProductAttributeFilter>>;
-  categoryId?: InputMaybe<Scalars['String']['input']>;
-  limit?: Scalars['Int']['input'];
-  maxPrice?: InputMaybe<Scalars['Float']['input']>;
-  minPrice?: InputMaybe<Scalars['Float']['input']>;
-  offset?: Scalars['Int']['input'];
-  search?: InputMaybe<Scalars['String']['input']>;
-};
-
 export type LoginInput = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -79,14 +100,22 @@ export type MessageResponse = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addFavorite: Scalars['Boolean']['output'];
   createProduct: ProductDetails;
   deleteProduct: ProductDetails;
+  invalidateCategoriesCache: Scalars['Boolean']['output'];
   login: Tokens;
   logout: MessageResponse;
   refresh: Tokens;
   register: UserIdResponse;
+  removeFavorite: Scalars['Boolean']['output'];
   resendOtp: MessageResponse;
   verifyOtp: MessageResponse;
+};
+
+
+export type MutationAddFavoriteArgs = {
+  productId: Scalars['String']['input'];
 };
 
 
@@ -110,6 +139,11 @@ export type MutationRegisterArgs = {
 };
 
 
+export type MutationRemoveFavoriteArgs = {
+  productId: Scalars['String']['input'];
+};
+
+
 export type MutationResendOtpArgs = {
   input: ResendOtpInput;
 };
@@ -119,9 +153,20 @@ export type MutationVerifyOtpArgs = {
   input: VerifyOtpInput;
 };
 
-export type ProductAttributeFilter = {
-  slug: Scalars['String']['input'];
-  values: Array<Scalars['String']['input']>;
+export type PaginationMeta = {
+  __typename?: 'PaginationMeta';
+  currentPage: Scalars['Int']['output'];
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  itemsPerPage: Scalars['Int']['output'];
+  totalItems: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type PriceRangeAggregation = {
+  __typename?: 'PriceRangeAggregation';
+  max: Scalars['Float']['output'];
+  min: Scalars['Float']['output'];
 };
 
 export type ProductAttributeInput = {
@@ -144,7 +189,6 @@ export type ProductBase = {
   thumbnail?: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
-  variantsCount: Scalars['Int']['output'];
 };
 
 export type ProductCategory = {
@@ -172,7 +216,6 @@ export type ProductDetails = ProductBase & {
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
   variants: Array<ProductVariant>;
-  variantsCount: Scalars['Int']['output'];
 };
 
 export type ProductImage = {
@@ -187,26 +230,19 @@ export type ProductImageInput = {
   url: Scalars['String']['input'];
 };
 
-export type ProductListItem = ProductBase & {
+export type ProductListItem = {
   __typename?: 'ProductListItem';
-  category: ProductCategory;
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['ID']['output'];
-  /** Min price of variants */
-  minPrice?: Maybe<Scalars['Float']['output']>;
+  categoryName: Scalars['String']['output'];
+  categorySlug: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  inStock: Scalars['Boolean']['output'];
+  isLiked?: Maybe<Scalars['Boolean']['output']>;
+  maxPrice: Scalars['Float']['output'];
+  minPrice: Scalars['Float']['output'];
+  sellerId: Scalars['String']['output'];
   slug: Scalars['String']['output'];
-  /** Main picture */
-  thumbnail?: Maybe<Scalars['String']['output']>;
+  thumbnailUrl?: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
-  updatedAt: Scalars['DateTime']['output'];
-  /** Quantity of goods */
-  variantsCount: Scalars['Int']['output'];
-};
-
-export type ProductPagination = {
-  __typename?: 'ProductPagination';
-  items: Array<ProductListItem>;
-  total: Scalars['Int']['output'];
 };
 
 export type ProductSeller = {
@@ -215,6 +251,13 @@ export type ProductSeller = {
   id: Scalars['ID']['output'];
   lastName: Scalars['String']['output'];
 };
+
+export enum ProductSort {
+  Newest = 'NEWEST',
+  Popular = 'POPULAR',
+  PriceAsc = 'PRICE_ASC',
+  PriceDesc = 'PRICE_DESC'
+}
 
 export type ProductVariant = {
   __typename?: 'ProductVariant';
@@ -229,10 +272,22 @@ export type ProductVariant = {
 export type Query = {
   __typename?: 'Query';
   categories: Array<Category>;
-  hello: Scalars['String']['output'];
+  categoryBySlug?: Maybe<Category>;
+  categoryProducts: SearchResult;
   me?: Maybe<UserModel>;
   product: ProductDetails;
-  products: ProductPagination;
+  searchProducts: SearchResult;
+  searchSuggestions: Array<SearchSuggestion>;
+};
+
+
+export type QueryCategoryBySlugArgs = {
+  slug: Scalars['String']['input'];
+};
+
+
+export type QueryCategoryProductsArgs = {
+  input: CategoryProductsInput;
 };
 
 
@@ -241,8 +296,13 @@ export type QueryProductArgs = {
 };
 
 
-export type QueryProductsArgs = {
-  query: GetProductsInput;
+export type QuerySearchProductsArgs = {
+  input: SearchProductsInput;
+};
+
+
+export type QuerySearchSuggestionsArgs = {
+  input: SearchSuggestionsInput;
 };
 
 export type RegisterInput = {
@@ -254,6 +314,43 @@ export type RegisterInput = {
 
 export type ResendOtpInput = {
   email: Scalars['String']['input'];
+};
+
+export type SearchAggregations = {
+  __typename?: 'SearchAggregations';
+  attributes: Array<AttributeAggregation>;
+  priceRange?: Maybe<PriceRangeAggregation>;
+};
+
+export type SearchProductsInput = {
+  attributes?: InputMaybe<Array<AttributeFilterInput>>;
+  inStock?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: Scalars['Int']['input'];
+  maxPrice?: InputMaybe<Scalars['Float']['input']>;
+  minPrice?: InputMaybe<Scalars['Float']['input']>;
+  page?: Scalars['Int']['input'];
+  query?: InputMaybe<Scalars['String']['input']>;
+  sort?: ProductSort;
+};
+
+export type SearchResult = {
+  __typename?: 'SearchResult';
+  aggregations: SearchAggregations;
+  items: Array<ProductListItem>;
+  pagination: PaginationMeta;
+};
+
+export type SearchSuggestion = {
+  __typename?: 'SearchSuggestion';
+  categoryName: Scalars['String']['output'];
+  categorySlug: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  slug: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type SearchSuggestionsInput = {
+  query: Scalars['String']['input'];
 };
 
 export type Tokens = {
@@ -275,18 +372,50 @@ export type UserModel = {
   firstName: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   lastName: Scalars['String']['output'];
+  role: UserRole;
   updatedAt: Scalars['DateTime']['output'];
 };
+
+export enum UserRole {
+  Admin = 'ADMIN',
+  User = 'USER'
+}
 
 export type VerifyOtpInput = {
   email: Scalars['String']['input'];
   otpCode: Scalars['String']['input'];
 };
 
+export type GetCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCategoriesQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, name: string, slug: string, icon?: string | null, parentId?: string | null }> };
+
+export type GetCategoryBySlugQueryVariables = Exact<{
+  slug: Scalars['String']['input'];
+}>;
+
+
+export type GetCategoryBySlugQuery = { __typename?: 'Query', categoryBySlug?: { __typename?: 'Category', id: string, name: string, slug: string, icon?: string | null } | null };
+
+export type SearchProductsQueryVariables = Exact<{
+  input: SearchProductsInput;
+}>;
+
+
+export type SearchProductsQuery = { __typename?: 'Query', searchProducts: { __typename?: 'SearchResult', items: Array<{ __typename?: 'ProductListItem', id: string, title: string, slug: string, minPrice: number, maxPrice: number, inStock: boolean, thumbnailUrl?: string | null, categorySlug: string, categoryName: string }>, pagination: { __typename?: 'PaginationMeta', currentPage: number, totalPages: number, totalItems: number, itemsPerPage: number, hasNextPage: boolean, hasPrevPage: boolean }, aggregations: { __typename?: 'SearchAggregations', attributes: Array<{ __typename?: 'AttributeAggregation', slug: string, name: string, values: Array<{ __typename?: 'AttributeValueAggregation', value: string, count: number }> }>, priceRange?: { __typename?: 'PriceRangeAggregation', min: number, max: number } | null } } };
+
+export type CategoryProductsQueryVariables = Exact<{
+  input: CategoryProductsInput;
+}>;
+
+
+export type CategoryProductsQuery = { __typename?: 'Query', categoryProducts: { __typename?: 'SearchResult', items: Array<{ __typename?: 'ProductListItem', id: string, title: string, sellerId: string, slug: string, minPrice: number, maxPrice: number, inStock: boolean, thumbnailUrl?: string | null, categorySlug: string, categoryName: string, isLiked?: boolean | null }>, pagination: { __typename?: 'PaginationMeta', currentPage: number, totalPages: number, totalItems: number, itemsPerPage: number, hasNextPage: boolean, hasPrevPage: boolean }, aggregations: { __typename?: 'SearchAggregations', attributes: Array<{ __typename?: 'AttributeAggregation', slug: string, name: string, values: Array<{ __typename?: 'AttributeValueAggregation', value: string, count: number }> }>, priceRange?: { __typename?: 'PriceRangeAggregation', min: number, max: number } | null } } };
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'UserModel', id: string, email: string, firstName: string, lastName: string } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'UserModel', id: string, email: string, role: UserRole } | null };
 
 export type RegisterMutationVariables = Exact<{
   input: RegisterInput;
@@ -321,10 +450,38 @@ export type ResendOtpMutationVariables = Exact<{
 
 export type ResendOtpMutation = { __typename?: 'Mutation', resendOtp: { __typename?: 'MessageResponse', message: string } };
 
+export type AddFavoriteMutationVariables = Exact<{
+  productId: Scalars['String']['input'];
+}>;
 
-export const MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}}]}}]}}]} as unknown as DocumentNode<MeQuery, MeQueryVariables>;
+
+export type AddFavoriteMutation = { __typename?: 'Mutation', addFavorite: boolean };
+
+export type RemoveFavoriteMutationVariables = Exact<{
+  productId: Scalars['String']['input'];
+}>;
+
+
+export type RemoveFavoriteMutation = { __typename?: 'Mutation', removeFavorite: boolean };
+
+export type SearchSuggestionsQueryVariables = Exact<{
+  input: SearchSuggestionsInput;
+}>;
+
+
+export type SearchSuggestionsQuery = { __typename?: 'Query', searchSuggestions: Array<{ __typename?: 'SearchSuggestion', id: string, title: string, slug: string, categorySlug: string, categoryName: string }> };
+
+
+export const GetCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"icon"}},{"kind":"Field","name":{"kind":"Name","value":"parentId"}}]}}]}}]} as unknown as DocumentNode<GetCategoriesQuery, GetCategoriesQueryVariables>;
+export const GetCategoryBySlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCategoryBySlug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoryBySlug"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"slug"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"icon"}}]}}]}}]} as unknown as DocumentNode<GetCategoryBySlugQuery, GetCategoryBySlugQueryVariables>;
+export const SearchProductsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"searchProducts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SearchProductsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchProducts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"minPrice"}},{"kind":"Field","name":{"kind":"Name","value":"maxPrice"}},{"kind":"Field","name":{"kind":"Name","value":"inStock"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailUrl"}},{"kind":"Field","name":{"kind":"Name","value":"categorySlug"}},{"kind":"Field","name":{"kind":"Name","value":"categoryName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pagination"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentPage"}},{"kind":"Field","name":{"kind":"Name","value":"totalPages"}},{"kind":"Field","name":{"kind":"Name","value":"totalItems"}},{"kind":"Field","name":{"kind":"Name","value":"itemsPerPage"}},{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"hasPrevPage"}}]}},{"kind":"Field","name":{"kind":"Name","value":"aggregations"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"values"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"value"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"priceRange"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"min"}},{"kind":"Field","name":{"kind":"Name","value":"max"}}]}}]}}]}}]}}]} as unknown as DocumentNode<SearchProductsQuery, SearchProductsQueryVariables>;
+export const CategoryProductsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"categoryProducts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CategoryProductsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoryProducts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"sellerId"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"minPrice"}},{"kind":"Field","name":{"kind":"Name","value":"maxPrice"}},{"kind":"Field","name":{"kind":"Name","value":"inStock"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailUrl"}},{"kind":"Field","name":{"kind":"Name","value":"categorySlug"}},{"kind":"Field","name":{"kind":"Name","value":"categoryName"}},{"kind":"Field","name":{"kind":"Name","value":"isLiked"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pagination"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentPage"}},{"kind":"Field","name":{"kind":"Name","value":"totalPages"}},{"kind":"Field","name":{"kind":"Name","value":"totalItems"}},{"kind":"Field","name":{"kind":"Name","value":"itemsPerPage"}},{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"hasPrevPage"}}]}},{"kind":"Field","name":{"kind":"Name","value":"aggregations"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"values"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"value"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"priceRange"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"min"}},{"kind":"Field","name":{"kind":"Name","value":"max"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CategoryProductsQuery, CategoryProductsQueryVariables>;
+export const MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"role"}}]}}]}}]} as unknown as DocumentNode<MeQuery, MeQueryVariables>;
 export const RegisterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Register"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RegisterInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"register"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]} as unknown as DocumentNode<RegisterMutation, RegisterMutationVariables>;
 export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
 export const LogoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Logout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"logout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<LogoutMutation, LogoutMutationVariables>;
 export const VerifyOtpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"VerifyOtp"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"VerifyOtpInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"verifyOtp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<VerifyOtpMutation, VerifyOtpMutationVariables>;
 export const ResendOtpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ResendOtp"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ResendOtpInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"resendOtp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<ResendOtpMutation, ResendOtpMutationVariables>;
+export const AddFavoriteDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddFavorite"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"productId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addFavorite"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"productId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"productId"}}}]}]}}]} as unknown as DocumentNode<AddFavoriteMutation, AddFavoriteMutationVariables>;
+export const RemoveFavoriteDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RemoveFavorite"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"productId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeFavorite"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"productId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"productId"}}}]}]}}]} as unknown as DocumentNode<RemoveFavoriteMutation, RemoveFavoriteMutationVariables>;
+export const SearchSuggestionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchSuggestions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SearchSuggestionsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchSuggestions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"categorySlug"}},{"kind":"Field","name":{"kind":"Name","value":"categoryName"}}]}}]}}]} as unknown as DocumentNode<SearchSuggestionsQuery, SearchSuggestionsQueryVariables>;

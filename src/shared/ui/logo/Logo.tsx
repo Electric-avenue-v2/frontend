@@ -1,23 +1,27 @@
+import clsx from 'clsx';
 import { Zap } from 'lucide-react';
 import { type Route } from 'next';
 import Link from 'next/link';
-import type { FC } from 'react';
+import type { ComponentProps, FC } from 'react';
+import { Typography } from '~/shared/ui/typography';
 import styles from './logo.module.css';
 
-interface LogoProps {
+interface LogoProps extends Omit<ComponentProps<typeof Link>, 'href'> {
 	href?: Route;
 }
 
-export const Logo: FC<LogoProps> = ({ href = '/' }) => {
+export const Logo: FC<LogoProps> = ({ href = '/', className, ...props }) => {
 	return (
-		<Link href={href} className={styles.logoLink}>
+		<Link href={href} className={clsx(styles.logoLink, className)} {...props}>
 			<div className={styles.iconWrapper}>
 				<Zap className={styles.icon} />
 			</div>
-			<span className={styles.textBase}>
+			<Typography variant="body" as="span" className={styles.textBase}>
 				Electric
-				<span className={styles.textHighlight}>Avenue</span>
-			</span>
+				<Typography variant="body" as="span" className={styles.textHighlight}>
+					Avenue
+				</Typography>
+			</Typography>
 		</Link>
 	);
 };

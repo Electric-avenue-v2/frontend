@@ -9,8 +9,8 @@
 	}
 
 	.iconWrapper {
-		width: 2.2rem;
-		height: 2.2rem;
+		width: 2rem;
+		height: 2rem;
 		border-radius: var(--radius-xl);
 		background-color: var(--color-accent);
 		display: flex;
@@ -30,13 +30,16 @@
 	}
 
 	.textBase {
-		font-size: var(--text-lg);
+		font-size: var(--text-md);
 		line-height: var(--leading-relaxed);
 		font-weight: var(--font-bold);
 		color: var(--color-primary-active);
 	}
 
 	.textHighlight {
+		line-height: var(--leading-relaxed);
+		font-size: var(--text-md);
 		color: var(--color-accent);
+		font-weight: var(--font-bold);
 	}
 }

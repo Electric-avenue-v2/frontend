@@ -1,10 +1,7 @@
-export function FieldDemo() {
-	console.log(1);
-	return (
-		<div>
+import { Home } from '~/widgets/home';
 
-		</div>
-	);
-}
+const Page = () => {
+	return <Home />;
+};
 
-export default FieldDemo;
+export default Page;

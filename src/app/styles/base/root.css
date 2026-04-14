@@ -5,6 +5,9 @@
         line-height:  var(--leading-normal);
         color:        var(--color-fg);
         background-color: var(--color-bg);
+
+        --bottom-nav-height: 64px;
+        --header-height: 75px;
     }
 
     :focus-visible {
@@ -87,19 +90,21 @@
     }
 
     ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-    }
-    ::-webkit-scrollbar-track {
-        background: var(--color-bg-subtle);
-    }
-    ::-webkit-scrollbar-thumb {
-        background: var(--color-border-strong);
-        border-radius: var(--radius-full);
-        border: 2px solid var(--color-bg-subtle);
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: var(--color-fg-subtle);
+        width: 4px;
+        height: 4px;
     }
 
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: var(--color-border-strong);
+        border-radius: var(--radius-full);
+        border: var(--border-none);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: var(--color-fg-subtle);
+    }
 }
