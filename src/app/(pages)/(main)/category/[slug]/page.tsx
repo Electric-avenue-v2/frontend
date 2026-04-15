@@ -1,12 +1,11 @@
 import { type Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { FC } from 'react';
-import { GetCategoryBySlug } from '~/entities/category/api/category.queries';
-import { CategoryProductsDocument } from '~/entities/product';
-import { serverFetcher } from '~/shared/api/server-fetcher';
-import { configService } from '~/shared/config';
-import { mapSearchParamsToInput, type NextSearchParams, unSlugify } from '~/shared/lib';
+import { getCategoryBySlug } from '~/entities/category/index.server';
+import { getCategoryProducts } from '~/entities/product/index.server';
+import { mapSearchParamsToInput, type NextSearchParams } from '~/shared/lib';
 import { ProductListingWidget } from '~/widgets/product-listing';
+import { getCategoryJsonLd, getCategoryMetadata } from './_lib/get-category-seo';
 
 interface Props {
 	params: Promise<{ slug: string }>;
@@ -14,65 +13,27 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	const resolvedParams = await params;
-
-	const { categoryBySlug: category } = await serverFetcher(GetCategoryBySlug, {
-		slug: resolvedParams.slug
-	});
-
-	const categoryName = category?.name || unSlugify(resolvedParams.slug);
-
-	return {
-		title: categoryName,
-		description: `The best products in the ${categoryName} category.`,
-		alternates: { canonical: `/category/${resolvedParams.slug}` },
-		openGraph: {
-			title: categoryName,
-			description: `The best products in the ${categoryName} category.`,
-			images: category?.icon ? [{ url: category.icon }] : []
-		}
-	};
+	const { slug } = await params;
+	const category = await getCategoryBySlug(slug);
+	return getCategoryMetadata(category, slug);
 }
 
 const Page: FC<Props> = async ({ params, searchParams }) => {
-	const resolvedParams = await params;
+	const { slug } = await params;
 	const resolvedSearchParams = await searchParams;
 
 	const baseInput = mapSearchParamsToInput(resolvedSearchParams);
 
-	const [{ categoryBySlug: category }, { categoryProducts: products }] = await Promise.all([
-		serverFetcher(GetCategoryBySlug, { slug: resolvedParams.slug }),
-		serverFetcher(CategoryProductsDocument, {
-			input: {
-				...baseInput,
-				categorySlug: resolvedParams.slug
-			}
-		})
+	const [category, products] = await Promise.all([
+		getCategoryBySlug(slug),
+		getCategoryProducts({ ...baseInput, categorySlug: slug })
 	]);
 
 	if (!category) {
 		notFound();
 	}
 
-	console.log(products);
-
-	const DOMAIN_URL = configService.getOrThrow('NEXT_PUBLIC_DOMAIN_URL');
-	const jsonLd = {
-		'@context': 'https://schema.org',
-		'@type': 'CollectionPage',
-		name: category.name,
-		description: `The best products in the ${category.name} category.`,
-		url: `${DOMAIN_URL}/category/${resolvedParams.slug}`,
-		mainEntity: {
-			'@type': 'ItemList',
-			itemListElement: products.items.map((item, index) => ({
-				'@type': 'ListItem',
-				position: index + 1,
-				name: item.title,
-				url: `${DOMAIN_URL}/product/${item.slug}`
-			}))
-		}
-	};
+	const jsonLd = getCategoryJsonLd(category, products, slug);
 
 	return (
 		<>

@@ -1,1 +1,2 @@
-export { GetMeDocument } from './api/user.queries';
+export { getMe } from './api/user-fetchers.client';
+export type { MeResponse } from './model/user.types';

@@ -1,11 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import { buildCategoryTree, GetCategoriesDocument } from '~/entities/category';
-import { clientFetcher } from '~/shared/api';
+import { buildCategoryTree, CATEGORIES_QUERY_KEY, getCategories } from '~/entities/category';
 
 export const useGetCategories = () => {
 	return useQuery({
-		queryFn: () => clientFetcher(GetCategoriesDocument),
-		queryKey: ['categories'],
-		select: data => buildCategoryTree(data.categories)
+		queryFn: () => getCategories(),
+		queryKey: [CATEGORIES_QUERY_KEY],
+		select: data => buildCategoryTree(data)
 	});
 };

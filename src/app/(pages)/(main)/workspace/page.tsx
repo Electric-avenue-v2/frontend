@@ -1,8 +1,8 @@
-import { serverFetcher } from '~/shared/api/server-fetcher';
-import { GetMeDocument } from '~/entities/user';
+import { getMe } from '~/entities/user/index.server';
 
 const Page = async () => {
-	const data = await serverFetcher(GetMeDocument);
+	const data = await getMe();
+
 	console.log(data);
 	return <div>1</div>;
 };

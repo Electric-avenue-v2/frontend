@@ -33,7 +33,7 @@ const eslintConfig = defineConfig([
 			'@typescript-eslint/no-explicit-any': 'error',
 			'@typescript-eslint/await-thenable': 'error',
 			'@typescript-eslint/ban-ts-comment': ['error', { 'ts-ignore': 'allow-with-description' }],
-			'@typescript-eslint/return-await': ['error', 'never']
+			'@typescript-eslint/return-await': ['error', 'never'],
 		}
 	},
 	globalIgnores(['.next/**', 'out/**', 'build/**', 'coverage/**', 'next-env.d.ts']),

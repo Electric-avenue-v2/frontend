@@ -42,9 +42,11 @@ export const useSyncFavoritesMutation = () => {
 				return false;
 			}
 
-			await clientFetcher(SyncFavoriteDocument, {
-				input: { productIds: guestFavorites }
-			});
+			await clientFetcher(
+				SyncFavoriteDocument,
+				{ input: { productIds: guestFavorites } },
+				{ redirectOnUnauth: true }
+			);
 
 			return true;
 		},

@@ -20,7 +20,7 @@ export const ProductCard: FC<Props> = ({ product, isAuth, priority = false }) =>
 	const productPageLink = mapRoute(`/product/${product.slug}/${product.id}`);
 
 	return (
-		<Card className={styles.card} size="sm">
+		<Card className={styles.card} size="sm" data-out-stock={!product.inStock}>
 			<CardHeader className={styles.cardHeader}>
 				<FavoriteButton
 					isAuth={isAuth}
@@ -54,17 +54,23 @@ export const ProductCard: FC<Props> = ({ product, isAuth, priority = false }) =>
 			</CardContent>
 
 			<CardFooter className={styles.cardFooter}>
-				<Typography>
-					From
-					<Typography className={styles.price} as="span">
-						{' '}
-						${product.minPrice}
+				<div className={styles.footerWrapper}>
+					<Typography>
+						From
+						<Typography className={styles.price} as="span">
+							{' '}
+							${product.minPrice}
+						</Typography>
 					</Typography>
-				</Typography>
 
-				<Button size="icon" className={styles.messageBtn}>
-					<MessageCircle size={20} />
-				</Button>
+					{isAuth && (
+						<Button size="icon" className={styles.messageBtn}>
+							<MessageCircle size={20} />
+						</Button>
+					)}
+				</div>
+
+				{!product.inStock && <Typography variant="caption">Out of stock</Typography>}
 			</CardFooter>
 		</Card>
 	);

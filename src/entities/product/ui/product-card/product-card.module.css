@@ -2,6 +2,10 @@
 	border-radius: var(--radius-md);
 }
 
+.card[data-out-stock='true'] {
+	opacity: 0.6;
+}
+
 .card:hover {
 	box-shadow: var(--shadow-md);
 	z-index: 2;
@@ -53,14 +57,31 @@
 }
 
 .cardFooter {
+	display: block;
+	margin-bottom: var(--space-1-5);
+	border-top: var(--border-none);
+}
+
+.footerWrapper {
+	width: 100%;
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
+	justify-content: space-between;
+}
+
+.cardFooter > span {
+	color: var(--color-muted-fg);
+}
+
+.outOfStockWrapper > p {
+	border-radius: var(--radius-lg);
+	padding: var(--space-1) var(--space-2);
+	background-color: var(--color-destructive-muted);
+	width: fit-content;
 }
 
 .price {
 	font-weight: var(--font-bold);
-	color: color-mix(in oklch, var(--color-destructive), white 22%);
 }
 
 .messageBtn {
@@ -88,6 +109,7 @@
 
 	.cardFooter {
 		padding: var(--space-2) var(--space-2);
+		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
 		justify-content: flex-start;
