@@ -1,1 +1,1 @@
-export { getCategoryBySlug } from './api/category-fetchers.server';
+export { getCategoryBySlug, getSitemapCategories } from './api/category-fetchers.server';

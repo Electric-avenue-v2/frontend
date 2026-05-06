@@ -28,7 +28,16 @@ export const metadata: Metadata = {
 		default: 'Electric Avenue',
 		template: '%s | Electric Avenue'
 	},
-	description: 'Marketplace for electronics'
+	description: 'Marketplace for electronics',
+	icons: {
+		icon: [
+			{ url: '/favicon.svg', type: 'image/svg+xml' },
+			{ url: '/favicon.ico' },
+			{ url: '/favicon-32.png', sizes: '32x32', type: 'image/png' }
+		],
+		apple: '/apple-touch-icon.png'
+	},
+	manifest: '/site.webmanifest'
 };
 
 export const viewport: Viewport = {

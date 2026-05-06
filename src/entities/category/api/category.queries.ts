@@ -22,3 +22,12 @@ export const GetCategoryBySlug = graphql(`
 		}
 	}
 `)
+
+export const GetSitemapCategories = graphql(`
+	query GetSitemapCategories {
+		sitemapCategories {
+			slug
+			lastModified
+		}
+	}
+`)

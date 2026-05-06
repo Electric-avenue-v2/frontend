@@ -16,6 +16,5 @@ export const useProductLikeStatus = (
 			return serverState;
 		}
 
-		return state.guestFavorites.includes(productId);
-	});
+		return state.guestFavorites.some(item => item.productId === productId);	});
 };

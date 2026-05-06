@@ -40,8 +40,16 @@ export function stringifyAttributes(attributes: { slug: string; values: string[]
 	return parts.join(',');
 }
 
-export function mapSearchParamsToInput(searchParams: NextSearchParams) {
+export function mapPaginationParams(searchParams: NextSearchParams, defaultLimit = 24) {
 	const pageParam = getSingleParam(searchParams.page);
+
+	return {
+		page: pageParam ? Math.max(1, parseInt(pageParam, 10)) : 1,
+		limit: defaultLimit
+	};
+}
+
+export function mapSearchParamsToInput(searchParams: NextSearchParams) {
 	const sortParam = getSingleParam(searchParams.sort);
 	const minPriceParam = getSingleParam(searchParams.minPrice);
 	const maxPriceParam = getSingleParam(searchParams.maxPrice);
@@ -50,8 +58,7 @@ export function mapSearchParamsToInput(searchParams: NextSearchParams) {
 	const parsedSort = isProductSort(sortParam) ? sortParam : ProductSort.Newest;
 
 	return {
-		page: pageParam ? Math.max(1, parseInt(pageParam, 10)) : 1,
-		limit: 24,
+		...mapPaginationParams(searchParams),
 		sort: parsedSort,
 		minPrice: minPriceParam ? parseFloat(minPriceParam) : undefined,
 		maxPrice: maxPriceParam ? parseFloat(maxPriceParam) : undefined,

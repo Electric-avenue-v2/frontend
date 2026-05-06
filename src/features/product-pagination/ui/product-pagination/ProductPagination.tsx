@@ -1,4 +1,3 @@
-// src/features/product-pagination/ui/product-pagination.tsx
 'use client';
 
 import { type FC } from 'react';

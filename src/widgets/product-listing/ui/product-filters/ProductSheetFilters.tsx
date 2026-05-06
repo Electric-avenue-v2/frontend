@@ -14,7 +14,7 @@ export const ProductSheetFilters: FC<ProductSheetFiltersProps> = ({ aggregations
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
-				<Button variant="secondary">
+				<Button>
 					<Filter size={16} />
 					Filters
 				</Button>

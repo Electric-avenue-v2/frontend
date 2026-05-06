@@ -1,2 +1,2 @@
 export { ProductCard } from './ui/product-card/ProductCard';
-export type { CategoryProductsResponse } from './model/product.types';
+export type { CategoryProductsResponse, SearchProductsResponse } from './model/product.types';

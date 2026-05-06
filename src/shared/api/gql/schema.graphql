@@ -46,6 +46,11 @@ input CategoryProductsInput {
   sort: ProductSort! = NEWEST
 }
 
+type CategorySitemapInfo {
+  lastModified: DateTime!
+  slug: String!
+}
+
 input CreateProductInput {
   categoryId: String!
   description: String!
@@ -67,6 +72,27 @@ input CreateVariantInput {
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+input FavoriteProductsInput {
+  limit: Int! = 24
+  page: Int! = 1
+}
+
+type FavoriteProductsResult {
+  items: [ProductListItem!]!
+  pagination: PaginationMeta!
+}
+
+input GuestFavoriteItemInput {
+  addedAt: Float!
+  productId: String!
+}
+
+input GuestFavoriteProductsInput {
+  limit: Int! = 24
+  page: Int! = 1
+  productIds: [GuestFavoriteItemInput!]!
+}
 
 input LoginInput {
   email: String!
@@ -207,10 +233,13 @@ type Query {
   categories: [Category!]!
   categoryBySlug(slug: String!): Category
   categoryProducts(input: CategoryProductsInput!): SearchResult!
+  favoriteProducts(input: FavoriteProductsInput!): FavoriteProductsResult!
+  guestFavoriteProducts(input: GuestFavoriteProductsInput!): FavoriteProductsResult!
   me: UserModel
   product(id: String!): ProductDetails!
   searchProducts(input: SearchProductsInput!): SearchResult!
   searchSuggestions(input: SearchSuggestionsInput!): [SearchSuggestion!]!
+  sitemapCategories: [CategorySitemapInfo!]!
 }
 
 input RegisterInput {

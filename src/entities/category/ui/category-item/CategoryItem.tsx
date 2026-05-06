@@ -1,5 +1,4 @@
 import { ArrowRight } from 'lucide-react';
-import type { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { type FC } from 'react';
@@ -39,7 +38,7 @@ export const CategoryItem: FC<CategoryItemProps> = ({ category, onClick, onOpenC
 					<ArrowRight size={16} />
 				</>
 			) : (
-				<Link onClick={() => onOpenChange(false)} href={`/category/${category.slug}` as Route}>
+				<Link onClick={() => onOpenChange(false)} href={`/category/${category.slug}` as const}>
 					{category.icon && (
 						<Image
 							className={styles.icon}
@@ -52,21 +51,6 @@ export const CategoryItem: FC<CategoryItemProps> = ({ category, onClick, onOpenC
 					<Typography className={styles.text}>{category.name}</Typography>
 				</Link>
 			)}
-			{/*{category.icon && (*/}
-			{/*	<Image*/}
-			{/*		className={styles.icon}*/}
-			{/*		src={category.icon}*/}
-			{/*		alt={category.name}*/}
-			{/*		width={22}*/}
-			{/*		height={22}*/}
-			{/*	/>*/}
-			{/*)}*/}
-			{/*<Typography className={styles.text}>{category.name}</Typography>*/}
-			{/*{category.children.length > 0 && (*/}
-			{/*	<Typography variant="body-sm" as="span">*/}
-			{/*		<ArrowRight size={16} />*/}
-			{/*	</Typography>*/}
-			{/*)}*/}
 		</Button>
 	);
 };

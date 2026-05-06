@@ -30,7 +30,7 @@ export const MobileMenu: FC<MobileMenuProps> = ({ className, onOpenCategory, ...
 	return (
 		<Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
 			<SheetTrigger asChild>
-				<Button variant="ghost" size="icon" className={className} {...props}>
+				<Button variant="ghost" size="icon" className={className} aria-label="Open menu" {...props}>
 					<Menu />
 				</Button>
 			</SheetTrigger>
@@ -51,6 +51,7 @@ export const MobileMenu: FC<MobileMenuProps> = ({ className, onOpenCategory, ...
 					<Separator className={styles.separator} />
 
 					<HeaderActions
+						onClick={() => setIsSheetOpen(false)}
 						className={styles.headerActions}
 						shouldRenderText
 						authButtonProps={{

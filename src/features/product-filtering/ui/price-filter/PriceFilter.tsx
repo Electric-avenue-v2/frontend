@@ -35,6 +35,7 @@ export const PriceFilter: FC<Props> = ({ minBound, maxBound }) => {
 					onChange={handleInputChange(0)}
 					onBlur={handleBlur}
 					className={styles.input}
+					aria-label='Minimal price'
 				/>
 				<span className={styles.separator}>-</span>
 				<Input
@@ -44,6 +45,7 @@ export const PriceFilter: FC<Props> = ({ minBound, maxBound }) => {
 					onChange={handleInputChange(1)}
 					onBlur={handleBlur}
 					className={styles.input}
+					aria-label='Maximum price'
 				/>
 				<Button onClick={() => applyFilter()}>ОК</Button>
 			</div>

@@ -1,4 +1,3 @@
-import 'client-only';
 import { type CategoriesResponse } from '~/entities/category';
 import { clientFetcher } from '~/shared/api';
 import { GetCategoriesDocument } from './category.queries';

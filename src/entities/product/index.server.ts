@@ -1,1 +1,1 @@
-export { getCategoryProducts } from './api/product-fetchers.server';
+export { getCategoryProducts, getSearchProducts } from './api/product-fetchers.server';

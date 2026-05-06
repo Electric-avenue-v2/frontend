@@ -32,7 +32,7 @@ export const SortSelect = () => {
 
 	return (
 		<Select value={currentSort} onValueChange={handleValueChange}>
-			<SelectTrigger size="sm" className={styles.trigger}>
+			<SelectTrigger size="sm" aria-label='Sort selection' className={styles.trigger}>
 				<SelectValue aria-label={currentSort}>{SORT_OPTIONS[currentSort]}</SelectValue>
 			</SelectTrigger>
 			<SelectContent position="popper">

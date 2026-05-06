@@ -11,6 +11,7 @@ export const SearchProductsDocument = graphql(`
 				maxPrice
 				inStock
 				thumbnailUrl
+				sellerId
 				categorySlug
 				categoryName
 			}

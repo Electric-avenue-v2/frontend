@@ -4,6 +4,6 @@ export {
 	type NextSearchParams,
 	parseAttributes,
 	stringifyAttributes,
-	mapSearchParamsToInput
+	mapSearchParamsToInput,
+	mapPaginationParams
 } from './search-params-mapper';
-export { mapRoute } from './routes';

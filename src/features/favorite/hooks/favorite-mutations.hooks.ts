@@ -36,15 +36,12 @@ export const useToggleFavoriteMutation = () => {
 export const useSyncFavoritesMutation = () => {
 	return useMutation({
 		mutationFn: async () => {
-			const { guestFavorites } = useFavoritesStore.getState();
-
-			if (guestFavorites.length === 0) {
-				return false;
-			}
+			const productIds = useFavoritesStore.getState().getGuestProductIds();
+			if (productIds.length === 0) return false;
 
 			await clientFetcher(
 				SyncFavoriteDocument,
-				{ input: { productIds: guestFavorites } },
+				{ input: { productIds } },
 				{ redirectOnUnauth: true }
 			);
 

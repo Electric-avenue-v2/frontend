@@ -18,7 +18,7 @@ const authActions = [
 		text: 'Messages'
 	},
 	{
-		link: '/',
+		link: '/favorites',
 		icon: <Heart />,
 		text: 'Favorites'
 	}
@@ -28,6 +28,7 @@ interface HeaderActionsProps extends ComponentProps<'div'> {
 	shouldRenderText?: boolean;
 	authButtonProps?: ButtonProps;
 	noAuthButtonProps?: ButtonProps;
+	onClick?: () => void;
 }
 
 export const HeaderActions: FC<HeaderActionsProps> = ({
@@ -35,6 +36,7 @@ export const HeaderActions: FC<HeaderActionsProps> = ({
 	className,
 	authButtonProps,
 	noAuthButtonProps,
+	onClick,
 	...props
 }) => {
 	const { isAuth } = useAuth();
@@ -43,7 +45,7 @@ export const HeaderActions: FC<HeaderActionsProps> = ({
 		return (
 			<div className={className}>
 				<Button size="icon" variant="link" asChild {...noAuthButtonProps}>
-					<Link href="/auth/login">
+					<Link href="/auth/login" aria-label="Login">
 						<User />
 						{shouldRenderText && 'Login'}
 					</Link>
@@ -55,8 +57,15 @@ export const HeaderActions: FC<HeaderActionsProps> = ({
 	return (
 		<div className={clsx(styles.container, className)} {...props}>
 			{authActions.map((action, index) => (
-				<Button key={index} size="icon" variant="link" asChild {...authButtonProps}>
-					<Link href={action.link}>
+				<Button
+					key={index}
+					size="icon"
+					variant="link"
+					asChild
+					{...authButtonProps}
+					onClick={onClick}
+				>
+					<Link href={action.link} aria-label={action.text}>
 						{action.icon}
 						{shouldRenderText && action.text}
 					</Link>

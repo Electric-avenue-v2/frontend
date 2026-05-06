@@ -4,7 +4,6 @@ import Link from 'next/link';
 import type { FC } from 'react';
 import { FavoriteButton } from '~/features/favorite';
 import type { ProductListItem } from '~/shared/api/gql/graphql';
-import { mapRoute } from '~/shared/lib';
 import { Button } from '~/shared/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '~/shared/ui/card';
 import { Typography } from '~/shared/ui/typography';
@@ -14,10 +13,20 @@ interface Props {
 	product: ProductListItem;
 	isAuth: boolean;
 	priority?: boolean;
+	imageSizes: string;
 }
+const formatPrice = (value: number, showSymbol = true): string => {
+	const roundedValue = Math.round(value);
+	return showSymbol ? `$${roundedValue}` : `${roundedValue}`;
+};
 
-export const ProductCard: FC<Props> = ({ product, isAuth, priority = false }) => {
-	const productPageLink = mapRoute(`/product/${product.slug}/${product.id}`);
+export const ProductCard: FC<Props> = ({ product, isAuth, imageSizes, priority = false }) => {
+	const productPageLink = `/product/${product.slug}/${product.id}` as const;
+
+	const price =
+		product.minPrice === product.maxPrice
+			? formatPrice(product.minPrice)
+			: `${formatPrice(product.minPrice)}–${formatPrice(product.maxPrice, false)}`;
 
 	return (
 		<Card className={styles.card} size="sm" data-out-stock={!product.inStock}>
@@ -39,7 +48,8 @@ export const ProductCard: FC<Props> = ({ product, isAuth, priority = false }) =>
 							fill
 							className={styles.image}
 							loading={priority ? 'eager' : 'lazy'}
-							sizes="(max-width: 600px) 100vw, 250px"
+							fetchPriority={priority ? 'high' : 'auto'}
+							sizes={imageSizes}
 						/>
 					) : (
 						<div className={styles.placeholder}>
@@ -55,16 +65,12 @@ export const ProductCard: FC<Props> = ({ product, isAuth, priority = false }) =>
 
 			<CardFooter className={styles.cardFooter}>
 				<div className={styles.footerWrapper}>
-					<Typography>
-						From
-						<Typography className={styles.price} as="span">
-							{' '}
-							${product.minPrice}
-						</Typography>
+					<Typography className={styles.price} as="span">
+						{price}
 					</Typography>
 
 					{isAuth && (
-						<Button size="icon" className={styles.messageBtn}>
+						<Button size="icon" className={styles.messageBtn} aria-label="Message to seller">
 							<MessageCircle size={20} />
 						</Button>
 					)}

@@ -1,4 +1,3 @@
-import 'client-only';
 import { clientFetcher } from '~/shared/api';
 import { GetMeDocument } from '../api/user.queries';
 import { type MeResponse } from '../model/user.types';

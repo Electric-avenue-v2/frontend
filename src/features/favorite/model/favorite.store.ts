@@ -1,10 +1,16 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+export interface GuestFavoriteItem {
+	productId: string;
+	addedAt: number;
+}
+
 interface FavoritesStore {
-	guestFavorites: string[];
+	guestFavorites: GuestFavoriteItem[];
 	optimisticOverrides: Record<string, boolean>;
 
+	getGuestProductIds: () => string[];
 	toggleGuestFavorite: (productId: string) => void;
 	setOverride: (productId: string, value: boolean) => void;
 	removeOverride: (productId: string) => void;
@@ -13,37 +19,43 @@ interface FavoritesStore {
 
 export const useFavoritesStore = create<FavoritesStore>()(
 	persist(
-		(set) => ({
+		(set, get) => ({
 			guestFavorites: [],
 			optimisticOverrides: {},
 
-			toggleGuestFavorite: (productId) => set((state) => {
-				const exists = state.guestFavorites.includes(productId);
-				return {
-					guestFavorites: exists
-						? state.guestFavorites.filter((id) => id !== productId)
-						: [...state.guestFavorites, productId]
-				};
-			}),
+			toggleGuestFavorite: productId =>
+				set(state => {
+					const exists = state.guestFavorites.some(item => item.productId === productId);
 
-			setOverride: (productId, value) => set((state) => ({
-				optimisticOverrides: {
-					...state.optimisticOverrides,
-					[productId]: value
-				}
-			})),
+					return {
+						guestFavorites: exists
+							? state.guestFavorites.filter(item => item.productId !== productId)
+							: [...state.guestFavorites, { productId, addedAt: Date.now() }]
+					};
+				}),
 
-			removeOverride: (productId) => set((state) => {
-				const next = { ...state.optimisticOverrides };
-				delete next[productId];
-				return { optimisticOverrides: next };
-			}),
+			setOverride: (productId, value) =>
+				set(state => ({
+					optimisticOverrides: {
+						...state.optimisticOverrides,
+						[productId]: value
+					}
+				})),
 
-			clearGuestFavorites: () => set({ guestFavorites: [] })
+			removeOverride: productId =>
+				set(state => {
+					const next = { ...state.optimisticOverrides };
+					delete next[productId];
+					return { optimisticOverrides: next };
+				}),
+
+			clearGuestFavorites: () => set({ guestFavorites: [] }),
+
+			getGuestProductIds: () => get().guestFavorites.map(item => item.productId)
 		}),
 		{
 			name: 'guest-favorites',
-			partialize: (state) => ({
+			partialize: state => ({
 				guestFavorites: state.guestFavorites
 			})
 		}
