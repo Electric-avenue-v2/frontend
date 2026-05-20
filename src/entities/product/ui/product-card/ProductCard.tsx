@@ -7,6 +7,7 @@ import type { ProductListItem } from '~/shared/api/gql/graphql';
 import { Button } from '~/shared/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '~/shared/ui/card';
 import { Typography } from '~/shared/ui/typography';
+import { formatPriceRange } from '../../lib/product-formatters';
 import styles from './product-card.module.css';
 
 interface Props {
@@ -15,18 +16,11 @@ interface Props {
 	priority?: boolean;
 	imageSizes: string;
 }
-const formatPrice = (value: number, showSymbol = true): string => {
-	const roundedValue = Math.round(value);
-	return showSymbol ? `$${roundedValue}` : `${roundedValue}`;
-};
 
 export const ProductCard: FC<Props> = ({ product, isAuth, imageSizes, priority = false }) => {
 	const productPageLink = `/product/${product.slug}/${product.id}` as const;
 
-	const price =
-		product.minPrice === product.maxPrice
-			? formatPrice(product.minPrice)
-			: `${formatPrice(product.minPrice)}–${formatPrice(product.maxPrice, false)}`;
+	const price = formatPriceRange(product.minPrice, product.maxPrice, 'short');
 
 	return (
 		<Card className={styles.card} size="sm" data-out-stock={!product.inStock}>

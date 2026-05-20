@@ -9,18 +9,6 @@ input AttributeFilterInput {
   values: [String!]!
 }
 
-type AttributeInfo {
-  id: ID!
-  name: String!
-  slug: String!
-}
-
-type AttributeValue {
-  attribute: AttributeInfo!
-  id: ID!
-  value: String!
-}
-
 type AttributeValueAggregation {
   count: Int!
   value: String!
@@ -132,12 +120,14 @@ type PriceRangeAggregation {
   min: Float!
 }
 
-input ProductAttributeInput {
-  attributeValueId: String!
+type ProductAttribute {
+  name: String!
+  slug: String!
+  value: String!
 }
 
-type ProductAttributeValue {
-  value: AttributeValue!
+input ProductAttributeInput {
+  attributeValueId: String!
 }
 
 interface ProductBase {
@@ -145,12 +135,15 @@ interface ProductBase {
   createdAt: DateTime!
   id: ID!
 
+  """Max price of variants"""
+  maxPrice: Float!
+
   """Min price of variants"""
-  minPrice: Float
+  minPrice: Float!
   slug: String!
 
   """Main picture"""
-  thumbnail: String
+  thumbnailUrl: String!
   title: String!
   updatedAt: DateTime!
 }
@@ -168,15 +161,18 @@ type ProductDetails implements ProductBase {
   description: String!
   id: ID!
 
+  """Max price of variants"""
+  maxPrice: Float!
+
   """Min price of variants"""
-  minPrice: Float
+  minPrice: Float!
   productImages: [ProductImage!]!
   seller: ProductSeller!
   slug: String!
-  specs: [ProductAttributeValue!]!
+  specs: [ProductAttribute!]
 
   """Main picture"""
-  thumbnail: String
+  thumbnailUrl: String!
   title: String!
   updatedAt: DateTime!
   variants: [ProductVariant!]!
@@ -207,10 +203,62 @@ type ProductListItem {
   title: String!
 }
 
+type ProductSearchAttribute {
+  name: String!
+  numericValue: Float
+  slug: String!
+  value: String!
+}
+
+type ProductSearchDetails implements ProductBase {
+  category: ProductCategory!
+  categoryName: String!
+  categorySlug: String!
+  createdAt: DateTime!
+  description: String!
+  id: ID!
+  inStock: Boolean!
+
+  """Max price of variants"""
+  maxPrice: Float!
+
+  """Min price of variants"""
+  minPrice: Float!
+  productImages: [ProductImage!]!
+  seller: ProductSeller!
+  sellerId: String!
+  slug: String!
+  specs: [ProductSearchAttribute!]
+
+  """Main picture"""
+  thumbnailUrl: String!
+  title: String!
+  totalStock: Int!
+  updatedAt: DateTime!
+  variants: [ProductSearchVariant!]!
+}
+
+type ProductSearchVariant {
+  attributes: [ProductSearchAttribute!]
+  id: ID!
+  imageUrl: String
+  price: Float!
+  productImages: [ProductImage!]
+  sku: String!
+  stock: Int!
+}
+
 type ProductSeller {
   firstName: String!
   id: ID!
   lastName: String!
+}
+
+type ProductSeo {
+  description: String!
+  id: ID!
+  thumbnailUrl: String!
+  title: String!
 }
 
 enum ProductSort {
@@ -221,7 +269,7 @@ enum ProductSort {
 }
 
 type ProductVariant {
-  attributes: [ProductAttributeValue!]
+  attributes: [ProductAttribute!]
   id: ID!
   price: Float!
   productImages: [ProductImage!]
@@ -236,7 +284,8 @@ type Query {
   favoriteProducts(input: FavoriteProductsInput!): FavoriteProductsResult!
   guestFavoriteProducts(input: GuestFavoriteProductsInput!): FavoriteProductsResult!
   me: UserModel
-  product(id: String!): ProductDetails!
+  product(id: String!): ProductSearchDetails!
+  productSeo(id: String!): ProductSeo!
   searchProducts(input: SearchProductsInput!): SearchResult!
   searchSuggestions(input: SearchSuggestionsInput!): [SearchSuggestion!]!
   sitemapCategories: [CategorySitemapInfo!]!

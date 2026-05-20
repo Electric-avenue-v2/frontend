@@ -82,3 +82,58 @@ export const CategoryProductsDocument = graphql(`
 		}
 	}
 `);
+
+export const ProductByIdDocument = graphql(`
+	query Product($id: String!) {
+		product(id: $id) {
+			id
+			title
+			slug
+			createdAt
+			updatedAt
+			minPrice
+			maxPrice
+			totalStock
+			inStock
+			thumbnailUrl
+			description
+			category {
+				id
+				name
+				slug
+				icon
+			}
+			seller {
+				id
+				firstName
+				lastName
+			}
+			variants {
+				id
+				sku
+				price
+				stock
+				productImages {
+					id
+					url
+					publicId
+				}
+				attributes {
+					name
+					slug
+					value
+				}
+			}
+			productImages {
+				id
+				url
+				publicId
+			}
+			specs {
+				name
+				slug
+				value
+			}
+		}
+	}
+`);

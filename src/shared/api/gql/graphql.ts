@@ -30,20 +30,6 @@ export type AttributeFilterInput = {
   values: Array<Scalars['String']['input']>;
 };
 
-export type AttributeInfo = {
-  __typename?: 'AttributeInfo';
-  id: Scalars['ID']['output'];
-  name: Scalars['String']['output'];
-  slug: Scalars['String']['output'];
-};
-
-export type AttributeValue = {
-  __typename?: 'AttributeValue';
-  attribute: AttributeInfo;
-  id: Scalars['ID']['output'];
-  value: Scalars['String']['output'];
-};
-
 export type AttributeValueAggregation = {
   __typename?: 'AttributeValueAggregation';
   count: Scalars['Int']['output'];
@@ -203,24 +189,28 @@ export type PriceRangeAggregation = {
   min: Scalars['Float']['output'];
 };
 
-export type ProductAttributeInput = {
-  attributeValueId: Scalars['String']['input'];
+export type ProductAttribute = {
+  __typename?: 'ProductAttribute';
+  name: Scalars['String']['output'];
+  slug: Scalars['String']['output'];
+  value: Scalars['String']['output'];
 };
 
-export type ProductAttributeValue = {
-  __typename?: 'ProductAttributeValue';
-  value: AttributeValue;
+export type ProductAttributeInput = {
+  attributeValueId: Scalars['String']['input'];
 };
 
 export type ProductBase = {
   category: ProductCategory;
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
+  /** Max price of variants */
+  maxPrice: Scalars['Float']['output'];
   /** Min price of variants */
-  minPrice?: Maybe<Scalars['Float']['output']>;
+  minPrice: Scalars['Float']['output'];
   slug: Scalars['String']['output'];
   /** Main picture */
-  thumbnail?: Maybe<Scalars['String']['output']>;
+  thumbnailUrl: Scalars['String']['output'];
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
 };
@@ -239,14 +229,16 @@ export type ProductDetails = ProductBase & {
   createdAt: Scalars['DateTime']['output'];
   description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  /** Max price of variants */
+  maxPrice: Scalars['Float']['output'];
   /** Min price of variants */
-  minPrice?: Maybe<Scalars['Float']['output']>;
+  minPrice: Scalars['Float']['output'];
   productImages: Array<ProductImage>;
   seller: ProductSeller;
   slug: Scalars['String']['output'];
-  specs: Array<ProductAttributeValue>;
+  specs?: Maybe<Array<ProductAttribute>>;
   /** Main picture */
-  thumbnail?: Maybe<Scalars['String']['output']>;
+  thumbnailUrl: Scalars['String']['output'];
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
   variants: Array<ProductVariant>;
@@ -279,11 +271,64 @@ export type ProductListItem = {
   title: Scalars['String']['output'];
 };
 
+export type ProductSearchAttribute = {
+  __typename?: 'ProductSearchAttribute';
+  name: Scalars['String']['output'];
+  numericValue?: Maybe<Scalars['Float']['output']>;
+  slug: Scalars['String']['output'];
+  value: Scalars['String']['output'];
+};
+
+export type ProductSearchDetails = ProductBase & {
+  __typename?: 'ProductSearchDetails';
+  category: ProductCategory;
+  categoryName: Scalars['String']['output'];
+  categorySlug: Scalars['String']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  description: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  inStock: Scalars['Boolean']['output'];
+  /** Max price of variants */
+  maxPrice: Scalars['Float']['output'];
+  /** Min price of variants */
+  minPrice: Scalars['Float']['output'];
+  productImages: Array<ProductImage>;
+  seller: ProductSeller;
+  sellerId: Scalars['String']['output'];
+  slug: Scalars['String']['output'];
+  specs?: Maybe<Array<ProductSearchAttribute>>;
+  /** Main picture */
+  thumbnailUrl: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  totalStock: Scalars['Int']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+  variants: Array<ProductSearchVariant>;
+};
+
+export type ProductSearchVariant = {
+  __typename?: 'ProductSearchVariant';
+  attributes?: Maybe<Array<ProductSearchAttribute>>;
+  id: Scalars['ID']['output'];
+  imageUrl?: Maybe<Scalars['String']['output']>;
+  price: Scalars['Float']['output'];
+  productImages?: Maybe<Array<ProductImage>>;
+  sku: Scalars['String']['output'];
+  stock: Scalars['Int']['output'];
+};
+
 export type ProductSeller = {
   __typename?: 'ProductSeller';
   firstName: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   lastName: Scalars['String']['output'];
+};
+
+export type ProductSeo = {
+  __typename?: 'ProductSeo';
+  description: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  thumbnailUrl: Scalars['String']['output'];
+  title: Scalars['String']['output'];
 };
 
 export enum ProductSort {
@@ -295,7 +340,7 @@ export enum ProductSort {
 
 export type ProductVariant = {
   __typename?: 'ProductVariant';
-  attributes?: Maybe<Array<ProductAttributeValue>>;
+  attributes?: Maybe<Array<ProductAttribute>>;
   id: Scalars['ID']['output'];
   price: Scalars['Float']['output'];
   productImages?: Maybe<Array<ProductImage>>;
@@ -311,7 +356,8 @@ export type Query = {
   favoriteProducts: FavoriteProductsResult;
   guestFavoriteProducts: FavoriteProductsResult;
   me?: Maybe<UserModel>;
-  product: ProductDetails;
+  product: ProductSearchDetails;
+  productSeo: ProductSeo;
   searchProducts: SearchResult;
   searchSuggestions: Array<SearchSuggestion>;
   sitemapCategories: Array<CategorySitemapInfo>;
@@ -339,6 +385,11 @@ export type QueryGuestFavoriteProductsArgs = {
 
 
 export type QueryProductArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryProductSeoArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -468,6 +519,13 @@ export type CategoryProductsQueryVariables = Exact<{
 
 export type CategoryProductsQuery = { __typename?: 'Query', categoryProducts: { __typename?: 'SearchResult', items: Array<{ __typename?: 'ProductListItem', id: string, title: string, sellerId: string, slug: string, minPrice: number, maxPrice: number, inStock: boolean, thumbnailUrl?: string | null, categorySlug: string, categoryName: string, isLiked?: boolean | null }>, pagination: { __typename?: 'PaginationMeta', currentPage: number, totalPages: number, totalItems: number, itemsPerPage: number, hasNextPage: boolean, hasPrevPage: boolean }, aggregations: { __typename?: 'SearchAggregations', attributes: Array<{ __typename?: 'AttributeAggregation', slug: string, name: string, values: Array<{ __typename?: 'AttributeValueAggregation', value: string, count: number }> }>, priceRange?: { __typename?: 'PriceRangeAggregation', min: number, max: number } | null } } };
 
+export type ProductQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type ProductQuery = { __typename?: 'Query', product: { __typename?: 'ProductSearchDetails', id: string, title: string, slug: string, createdAt: any, updatedAt: any, minPrice: number, maxPrice: number, totalStock: number, inStock: boolean, thumbnailUrl: string, description: string, category: { __typename?: 'ProductCategory', id: string, name: string, slug: string, icon?: string | null }, seller: { __typename?: 'ProductSeller', id: string, firstName: string, lastName: string }, variants: Array<{ __typename?: 'ProductSearchVariant', id: string, sku: string, price: number, stock: number, productImages?: Array<{ __typename?: 'ProductImage', id: string, url: string, publicId: string }> | null, attributes?: Array<{ __typename?: 'ProductSearchAttribute', name: string, slug: string, value: string }> | null }>, productImages: Array<{ __typename?: 'ProductImage', id: string, url: string, publicId: string }>, specs?: Array<{ __typename?: 'ProductSearchAttribute', name: string, slug: string, value: string }> | null } };
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -554,6 +612,7 @@ export const GetCategoryBySlugDocument = {"kind":"Document","definitions":[{"kin
 export const GetSitemapCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSitemapCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sitemapCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"lastModified"}}]}}]}}]} as unknown as DocumentNode<GetSitemapCategoriesQuery, GetSitemapCategoriesQueryVariables>;
 export const SearchProductsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"searchProducts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SearchProductsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchProducts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"minPrice"}},{"kind":"Field","name":{"kind":"Name","value":"maxPrice"}},{"kind":"Field","name":{"kind":"Name","value":"inStock"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailUrl"}},{"kind":"Field","name":{"kind":"Name","value":"sellerId"}},{"kind":"Field","name":{"kind":"Name","value":"categorySlug"}},{"kind":"Field","name":{"kind":"Name","value":"categoryName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pagination"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentPage"}},{"kind":"Field","name":{"kind":"Name","value":"totalPages"}},{"kind":"Field","name":{"kind":"Name","value":"totalItems"}},{"kind":"Field","name":{"kind":"Name","value":"itemsPerPage"}},{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"hasPrevPage"}}]}},{"kind":"Field","name":{"kind":"Name","value":"aggregations"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"values"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"value"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"priceRange"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"min"}},{"kind":"Field","name":{"kind":"Name","value":"max"}}]}}]}}]}}]}}]} as unknown as DocumentNode<SearchProductsQuery, SearchProductsQueryVariables>;
 export const CategoryProductsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"categoryProducts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CategoryProductsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoryProducts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"sellerId"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"minPrice"}},{"kind":"Field","name":{"kind":"Name","value":"maxPrice"}},{"kind":"Field","name":{"kind":"Name","value":"inStock"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailUrl"}},{"kind":"Field","name":{"kind":"Name","value":"categorySlug"}},{"kind":"Field","name":{"kind":"Name","value":"categoryName"}},{"kind":"Field","name":{"kind":"Name","value":"isLiked"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pagination"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentPage"}},{"kind":"Field","name":{"kind":"Name","value":"totalPages"}},{"kind":"Field","name":{"kind":"Name","value":"totalItems"}},{"kind":"Field","name":{"kind":"Name","value":"itemsPerPage"}},{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"hasPrevPage"}}]}},{"kind":"Field","name":{"kind":"Name","value":"aggregations"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"values"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"value"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"priceRange"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"min"}},{"kind":"Field","name":{"kind":"Name","value":"max"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CategoryProductsQuery, CategoryProductsQueryVariables>;
+export const ProductDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Product"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"product"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"minPrice"}},{"kind":"Field","name":{"kind":"Name","value":"maxPrice"}},{"kind":"Field","name":{"kind":"Name","value":"totalStock"}},{"kind":"Field","name":{"kind":"Name","value":"inStock"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailUrl"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"icon"}}]}},{"kind":"Field","name":{"kind":"Name","value":"seller"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"variants"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"sku"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"stock"}},{"kind":"Field","name":{"kind":"Name","value":"productImages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"publicId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"productImages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"publicId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"specs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]}}]} as unknown as DocumentNode<ProductQuery, ProductQueryVariables>;
 export const MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"role"}}]}}]}}]} as unknown as DocumentNode<MeQuery, MeQueryVariables>;
 export const RegisterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Register"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RegisterInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"register"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]} as unknown as DocumentNode<RegisterMutation, RegisterMutationVariables>;
 export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
