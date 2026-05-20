@@ -38,8 +38,8 @@
 	}
 
 	.item:focus {
-		background: var(--color-accent);
-		color: var(--color-accent-fg);
+		background: var(--color-primary);
+		color: var(--color-primary-fg);
 	}
 
 	.item[data-disabled] {
@@ -102,8 +102,8 @@
 
 	.subTrigger:focus,
 	.subTrigger[data-state='open'] {
-		background: var(--color-accent);
-		color: var(--color-accent-fg);
+		background: var(--color-primary);
+		color: var(--color-primary-fg);
 	}
 
 	.subContent {

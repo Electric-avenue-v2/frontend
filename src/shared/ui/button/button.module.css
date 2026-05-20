@@ -94,8 +94,8 @@
 	}
 
 	.button[data-variant='outline']:active:not(:disabled) {
-		background-color: oklch(from var(--color-bg-muted) calc(l - 0.06) c h);
-		border-color: oklch(from var(--color-bg-muted) calc(l - 0.06) c h);
+		background-color: var(--color-bg-muted);
+		border-color: var(--color-border-strong);
 	}
 
 	.button[data-variant='secondary'] {
@@ -110,7 +110,7 @@
 	}
 
 	.button[data-variant='secondary']:active:not(:disabled) {
-		background-color: oklch(from var(--color-secondary) calc(l - 0.06) c h);
+		background-color: var(--color-secondary-hover);
 	}
 
 	.button[data-variant='ghost'] {
@@ -125,12 +125,12 @@
 	}
 
 	.button[data-variant='ghost']:active:not(:disabled) {
-		background-color: oklch(from var(--color-bg-muted) calc(l - 0.03) c h);
+		background-color: var(--color-muted);
 	}
 
 	.button[data-variant='link'] {
 		background-color: transparent;
-		color: var(--color-accent);
+		color: var(--color-primary);
 		border-color: transparent;
 		padding-inline: 0;
 		height: auto;

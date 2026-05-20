@@ -1,12 +1,12 @@
 @layer tokens {
     :root {
-        --shadow-color:        oklch(0.2 0.02 261 / 0.12);
-        --shadow-color-strong: oklch(0.2 0.02 261 / 0.22);
+        --shadow-color:        oklch(from var(--color-fg) l c h / 0.12);
+        --shadow-color-strong: oklch(from var(--color-fg) l c h / 0.22);
 
         /* Elevation scale */
         --shadow-none: none;
         --shadow-xs: 0 1px 2px var(--shadow-color);
-        --shadow-sm: 0 1px 3px var(--shadow-color), 0 1px 2px oklch(0.2 0.02 261 / 0.06);
+        --shadow-sm: 0 1px 3px var(--shadow-color), 0 1px 2px oklch(from var(--color-fg) l c h / 0.06);
         --shadow-md: 0 4px 6px -1px var(--shadow-color), 0 2px 4px -2px var(--shadow-color);
         --shadow-lg: 0 10px 15px -3px var(--shadow-color), 0 4px  6px  -4px var(--shadow-color);
         --shadow-xl: 0 20px 25px -5px  var(--shadow-color), 0 8px  10px -6px  var(--shadow-color);

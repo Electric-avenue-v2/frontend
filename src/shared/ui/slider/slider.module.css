@@ -21,7 +21,7 @@
     .range {
         position: absolute;
         height: 100%;
-        background-color: var(--color-accent);
+        background-color: var(--color-primary);
     }
 
     .thumb {
@@ -30,8 +30,8 @@
         width: 14px;
         height: 14px;
         border-radius: var(--radius-full);
-        background-color: var(--color-fg-inverted);
-        border: var(--border-1) solid var(--color-border);
+        background-color: var(--color-input-bg);
+        border: var(--border-2) solid var(--color-primary);
         cursor: pointer;
     }
 

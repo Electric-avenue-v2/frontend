@@ -28,12 +28,12 @@
 
     .checkbox:focus-visible {
         border-color: var(--color-ring);
-        box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 50%, transparent);
+        box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-ring) 50%, transparent);
     }
 
     .checkbox[aria-invalid="true"] {
         border-color: var(--color-destructive);
-        box-shadow: var(--color-destructive-hover);
+        box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-destructive) 24%, transparent);
     }
 
     .checkbox:disabled {

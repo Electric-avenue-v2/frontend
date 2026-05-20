@@ -6,7 +6,7 @@
     height: var(--bottom-nav-height);
     display: flex;
     align-items: center;
-    background: color-mix(var(--color-card), black 1%);
+    background: color-mix(in oklch, var(--color-card) 96%, var(--color-bg));
     border-top: var(--border-1) solid oklch(from var(--color-border) l c h / 0.5);
     z-index: var(--z-dropdown);
     padding-bottom: env(safe-area-inset-bottom);
@@ -22,7 +22,7 @@
     gap: var(--space-0-5);
     font-size: var(--text-xs);
     font-weight: var(--font-medium);
-    color: color-mix(in oklch, var(--color-fg-subtle), black 14%);
+    color: var(--color-fg-subtle);
     transition: all 0.2s ease;
     -webkit-tap-highlight-color: transparent;
 
@@ -39,11 +39,11 @@
 }
 
 .item:hover {
-    color: color-mix(in oklch, var(--color-fg-subtle), black 20%) ;
+    color: var(--color-fg-muted);
 }
 
 .active {
-    color: var(--color-fg);
+    color: var(--color-primary);
 }
 
 .active .icon {

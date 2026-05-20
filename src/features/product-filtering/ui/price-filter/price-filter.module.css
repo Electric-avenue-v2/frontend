@@ -13,8 +13,8 @@
 
 .input {
 	width: 100%;
-	border-color: var(--color-fg-inverted);
-	background-color: var(--color-fg-inverted);
+	border-color: var(--color-input-border);
+	background-color: var(--color-input-bg);
 	-moz-appearance: textfield;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .input:focus {
-	border-color: var(--color-border);
+	border-color: var(--color-border-focus);
 }
 
 .separator {

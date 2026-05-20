@@ -1,5 +1,6 @@
 .container {
     padding: var(--space-3);
+    border: var(--border-1) solid var(--color-border);
 }
 
 .accordion {

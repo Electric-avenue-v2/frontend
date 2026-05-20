@@ -15,3 +15,5 @@
     - `entities/`: Business entities (e.g., User, Product).
     - `shared/`: Reusable UI components, hooks, utilities, and API instances.
 - **Component Design:** Keep UI components dumb. Extract business logic, state management, and side effects into custom hooks.
+- Decompose the code as much as possible
+- I don't want to see files longer than 200 lines of code.

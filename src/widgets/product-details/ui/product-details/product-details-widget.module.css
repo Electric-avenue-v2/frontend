@@ -27,12 +27,12 @@
 	background:
 		linear-gradient(
 			135deg,
-			color-mix(in oklch, var(--color-muted), white 62%) 0 1px,
+			color-mix(in oklch, var(--color-muted), var(--color-bg) 62%) 0 1px,
 			transparent 1px
 		),
 		linear-gradient(
 			225deg,
-			color-mix(in oklch, var(--color-accent-subtle), white 38%),
+			color-mix(in oklch, var(--color-primary) 12%, var(--color-bg) 38%),
 			var(--color-card) 58%
 		);
 	background-size:
@@ -132,13 +132,13 @@
 .stockBadge[data-stock='true'] {
 	border-color: color-mix(in oklch, var(--color-success), var(--color-border) 48%);
 	color: var(--color-success);
-	background: color-mix(in oklch, var(--color-success-subtle), white 18%);
+	background: color-mix(in oklch, var(--color-success-subtle), var(--color-bg) 18%);
 }
 
 .stockBadge[data-stock='false'] {
 	border-color: color-mix(in oklch, var(--color-destructive), var(--color-border) 48%);
 	color: var(--color-destructive);
-	background: color-mix(in oklch, var(--color-destructive-subtle), white 18%);
+	background: color-mix(in oklch, var(--color-destructive-subtle), var(--color-bg) 18%);
 }
 
 .metaGrid {
@@ -159,7 +159,7 @@
 	background: linear-gradient(
 		180deg,
 		var(--color-card),
-		color-mix(in oklch, var(--color-muted), white 72%)
+		color-mix(in oklch, var(--color-muted), var(--color-bg) 72%)
 	);
 	box-shadow: var(--shadow-xs);
 }
@@ -331,7 +331,7 @@
 	padding: var(--space-1) var(--space-2);
 	color: var(--color-muted-fg);
 	font-size: var(--text-xs);
-	background: color-mix(in oklch, var(--color-muted), white 35%);
+	background: color-mix(in oklch, var(--color-muted), var(--color-bg) 35%);
 }
 
 .variantAttrs span,

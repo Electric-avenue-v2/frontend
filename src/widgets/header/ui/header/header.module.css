@@ -24,7 +24,7 @@
 }
 
 .headerActions > a {
-	color: color-mix(in oklch, var(--color-fg-muted), black 20%);
+	color: var(--color-fg-muted);
 }
 
 @media screen and (width < 520px) {

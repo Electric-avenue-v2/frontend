@@ -17,11 +17,11 @@
     }
 
     .textarea::placeholder {
-        color: var(--color-fg-muted);
+        color: var(--color-fg);
     }
 
     .textarea:focus-visible {
-        border: var(--border-2) solid oklch(from var(--color-input-border) calc(l - 0.1) c h);
+        border: var(--border-2) solid var(--color-border-focus);
         box-shadow: var(--shadow-sm);
     }
 

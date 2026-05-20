@@ -85,8 +85,8 @@
     }
 
     ::selection {
-        background-color: var(--color-accent);
-        color: var(--color-accent-fg);
+        background-color: var(--color-primary);
+        color: var(--color-primary-fg);
     }
 
     ::-webkit-scrollbar {
